@@ -9,7 +9,8 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="cover-page-intro">
+    <main id="cover-page-intro">
+    <section>
         <h1>Welcome to my wonderful attempt at Lemonade Tycoon</h1>
         <p>Lemonade Tycoon, first released as Lemonade Inc., is a Shockwave-based game. A free, limited version is available for
         online play at many sites or the full version with no time restrictions can be purchased online. The goal of Lemonade
@@ -31,14 +32,21 @@
         management for its students. The LearningPlanet.com version of Lemonade Tycoon is visually different but functionally
         identical to the other iterations of the game.</p>
 
-    </div>
-    <div class="button-container">
-        <button id="open">Start Game</button>
-    </div>
+    </section>
     <aside class="creator-info">
         <img src="./images/meandkidspicture.jpg" alt="picture of creator with his kids" height="200vh" width="200vw">
-        <a href="">GitHub</a>
-        <a href="">Linked-In</a>
+        <div class="link">
+            <ul>
+                <li><a class="link" href="">GitHub</a></li>
+                <li><a class="link" href="">Linked-In</a></li>
+            </ul>
+        </div>
+    
+    
     </aside>
+</main>
+<div class="intro-button-container">
+    <button onclick="location.href = 'startscreen.html'" id="open">Start Game</button>
+</div>
 </body>
 </html>

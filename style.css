@@ -1,3 +1,29 @@
+/* *{
+    border: 1px red dashed;
+} */
 body{
     background-color: aqua;
+    
+}
+main{
+    display: flex;
+    align-items: flex-end;
+}
+#cover-page-intro{
+    width: auto;
+    height: 50vh;
+}
+.creator-info{
+    width: auto;
+    height: 50vh;
+    justify-content: center;
+}
+.button-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+#open{
+    font-size: xx-large;
+    
 }

@@ -6,7 +6,7 @@ CLASSES
 /* ======================
  GLOBAL VARS
 =========================*/
-let openedwindow;
+
 /* ======================
  DOM STUFF
 =========================*/
@@ -18,18 +18,18 @@ const openGame = document.querySelector("#open");
 FUNCTIONS
 ============================= */
 function runGame() {
-  openedwindow = window.open("startscreen.html");
+  window.location = "startscreen.html";
 }
 function startGame() {
   console.log("button works");
   window.location = "playerscreen.html";
 }
 function exitGame() {
-  openedwindow.close();
+  window.location = "index.html";
 }
 /* =============================
 EVENT LISTENERS
 ============================= */
-openGame.addEventListener("click", runGame);
+// openGame.addEventListener("click", runGame);
 // newGame.addEventListener("click", startGame);
-closeGame.addEventListener("click", window.close());
+// closeGame.addEventListener("click", exitGame);

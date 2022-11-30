@@ -30,6 +30,4 @@ function exitGame() {
 /* =============================
 EVENT LISTENERS
 ============================= */
-// openGame.addEventListener("click", runGame);
-// newGame.addEventListener("click", startGame);
-// closeGame.addEventListener("click", exitGame);
+newGame.addEventListener("click", startGame);

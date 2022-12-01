@@ -9,16 +9,19 @@
     <title>lemons -player screen</title>
 </head>
 <body>
-    <button>stats</button>
-    <button>rent</button>
-    <button>upgrades</button>
-    <button>staff</button>
-    <button>marketing</button>
-    <button>recipe</button>
-    <button>supplies</button>
-    <button class="save-game">Save Game</button>
+    <main>
+    <div class="button-container">
+        <button class="stats">stats</button>
+        <button class="rent">rent</button>
+        <button class="upgrades">upgrades</button>
+        <button class="staff">staff</button>
+        <button class="marketing">marketing</button>
+        <button class="recipe">recipe</button>
+        <button class="supplies">supplies</button>
+        <button class="save-game">Save Game</button>
+    </div>
     <div class="modal-container">
-        <div class="modal-1">
+        <div class="stats modal">
             <h2>Your stats</h2>
             <div>
                 <table>
@@ -85,54 +88,56 @@
                 </table>
             </div>
         </div>
-    <div class="modal-container">
-        <div class="modal-2">
-            <h2></h2>
-            <div class="game-specific-buttons">
-                <button id="new-game">New Game</button>
-                <button id="load-save">Saved Game</button>
-            </div>
-        </div>
-    <div class="modal-container">
-        <div class="modal-3">
-            <h2>Select a new game or load your saved game</h2>
-            <div class="game-specific-buttons">
-                <button id="new-game">New Game</button>
-                <button id="load-save">Saved Game</button>
-            </div>
-        </div>
-    <div class="modal-container">
-        <div class="modal-4">
-            <h2>Select a new game or load your saved game</h2>
-            <div class="game-specific-buttons">
-                <button id="new-game">New Game</button>
-                <button id="load-save">Saved Game</button>
-            </div>
-        </div>
-    <div class="modal-container">
-        <div class="modal-5">
-            <h2>Select a new game or load your saved game</h2>
-            <div class="game-specific-buttons">
-                <button id="new-game">New Game</button>
-                <button id="load-save">Saved Game</button>
-            </div>
-        </div>
-    <div class="modal-container">
-        <div class="modal-6">
-            <h2>Select a new game or load your saved game</h2>
-            <div class="game-specific-buttons">
-                <button id="new-game">New Game</button>
-                <button id="load-save">Saved Game</button>
-            </div>
-        </div>
-    <div class="modal-container">
-        <div class="modal-7">
-            <h2>Select a new game or load your saved game</h2>
+    
+        <div class="rent modal">
+            <h2>choose where you want to set up your stand and how much it will cost you.</h2>
             <div class="game-specific-buttons">
                 <button id="new-game">New Game</button>
                 <button id="load-save">Saved Game</button>
             </div>
         </div>
     
+        <div class="upgrades modal">
+            <h2>Lets get some upgrades</h2>
+            <div class="game-specific-buttons">
+                <button id="new-game">New Game</button>
+                <button id="load-save">Saved Game</button>
+            </div>
+        </div>
+    
+        <div class="staff modal">
+            <h2>hire,review, and fire staff</h2>
+            <div class="game-specific-buttons">
+                <button id="new-game">New Game</button>
+                <button id="load-save">Saved Game</button>
+            </div>
+        </div>
+    
+        <div class="marketing modal">
+            <h2>Choose your marketing tactics</h2>
+            <div class="game-specific-buttons">
+                <button id="new-game">New Game</button>
+                <button id="load-save">Saved Game</button>
+            </div>
+        </div>
+        <div class="recipe modal">
+            <h2>Adjust your recipe</h2>
+            <div class="game-specific-buttons">
+                <button id="new-game">New Game</button>
+                <button id="load-save">Saved Game</button>
+            </div>
+        </div>
+        <div class="supplies modal">
+            <h2>Buy some supplies</h2>
+            <div class="game-specific-buttons">
+                <button id="new-game">New Game</button>
+                <button id="load-save">Saved Game</button>
+            </div>
+        </div>
+    </div>
+        <div class="bottom button-container"></div>
+        <button class="main-menu">Main Menu</button>
+        <button class="start-day">Start Day</button>
+    </main>
 </body>
 </html>

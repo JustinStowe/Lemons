@@ -49,10 +49,10 @@ function quitGame() {
   document.location.href = "index.html";
 }
 function newGame() {
-  document.location.href = "playerscreen.html";
+  document.location.href = "index3.html";
 }
 function loadGame() {
-  document.location.href = "playerscreen.html";
+  document.location.href = "index3.html";
 }
 function displayStats() {
   highlights = JSON.parse(localStorage.getItem("bestGameStats"));

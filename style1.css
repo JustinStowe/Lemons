@@ -1,0 +1,20 @@
+body {
+    background-color: aquamarine;
+}
+main{
+    display: flex;
+    align-items: flex-end;
+}
+.creator-info{
+    width: auto;
+    height: 50vh;
+    justify-content: center;
+}
+.button-container>button {
+    font-size: xx-large;
+}
+.button-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

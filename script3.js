@@ -87,3 +87,6 @@ savegame.addEventListener("click", saveMyGame);
 mainMenu.addEventListener("click", () => {
   document.location.href = "index2.html";
 });
+startDay.addEventListener("click", () => {
+  document.location.href = "index4.html";
+});

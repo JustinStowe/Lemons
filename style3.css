@@ -1,5 +1,71 @@
 body {
     background-color: aquamarine;
+    display: grid;
+    width: 98%;
+    height:10fr;
+    grid-template:
+    'stats rent upgrades staff marketing recipe supplies'
+    'modal modal modal modal  modal info info'
+    'modal modal modal modal  modal info info'
+    'modal modal modal modal  modal blank blank'
+    'modal modal modal modal  modal location location'
+    'modal modal modal modal  modal location location'
+    'modal modal modal modal  modal location location'
+    'modal modal modal modal  modal flavor-text flavor-text'
+    'blank blank blank blank blank flavor-text flavor-text'
+    'blank blank  blank blank save main start'
+    / auto 1em auto;
+}
+.info {
+    grid-area: info;
+    display: block;
+        position: fixed;
+        top: 15%;
+        right: 10%;
+    
+}
+
+.picture-of-location {
+    grid-area: 'location';
+    position: fixed;
+    top: 30%;
+    right: 10%;
+}
+
+.flavor-text {
+    grid-area: flavor-text;
+    position: fixed;
+    bottom: 20%;
+    right: 10%;
+}
+.stats{
+    grid-area: stats;
+}
+.rent{
+    grid-area: rent;
+}
+.upgrades{
+    grid-area: upgrades;
+}
+.staff{
+    grid-area: staff;
+}
+.marketing{
+    grid-area: marketing;
+}
+.recipe{
+    grid-area: recipe;
+}
+.supplies{
+    grid-area: supplies;
+}
+.modal-container{
+    display: block;
+    height: 65em;
+    width: 65em;
+}
+.save-game{
+    grid-area: save;
 }
 .button-container{
     display: flex;
@@ -7,12 +73,97 @@ body {
 }
 .button-container > button{
     font-size: xx-large;
+    padding: 1em 1em 1em 1em;
 }
-.bottom {
-    position: relative;
-}
-.modal {
+.stats-modal{
     display: none;
+    grid-area: modal;
+    position: fixed;
+    top: 45%;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    background-color: black;
+    border-radius: 4px;
+    box-shadow: 4px 1px 10px 0px #dadada;
+    text-align: center;
+    transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    color: rgb(17, 214, 221);
+}
+.rent-modal{
+    display: none;
+    grid-area: modal;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    background-color: black;
+    border-radius: 4px;
+    box-shadow: 4px 1px 10px 0px #dadada;
+    text-align: center;
+    transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    color: rgb(17, 214, 221);
+}
+.upgrades-modal{
+    display: none;
+    grid-area: modal;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    background-color: black;
+    border-radius: 4px;
+    box-shadow: 4px 1px 10px 0px #dadada;
+    text-align: center;
+    transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    color: rgb(17, 214, 221);
+}
+.staff-modal{
+    display: none;
+    grid-area: modal;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    background-color: black;
+    border-radius: 4px;
+    box-shadow: 4px 1px 10px 0px #dadada;
+    text-align: center;
+    transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    color: rgb(17, 214, 221);
+}
+.marketing-modal{
+    display: none;
+    grid-area: modal;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    background-color: black;
+    border-radius: 4px;
+    box-shadow: 4px 1px 10px 0px #dadada;
+    text-align: center;
+    transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    color: rgb(17, 214, 221);
+}
+.recipe-modal{
+    display: none;
+    grid-area: modal;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    background-color: black;
+    border-radius: 4px;
+    box-shadow: 4px 1px 10px 0px #dadada;
+    text-align: center;
+    transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    color: rgb(17, 214, 221);
+}
+.supplies-modal{
+    display: none;
+    grid-area: modal;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    background-color: black;
+    border-radius: 4px;
+    box-shadow: 4px 1px 10px 0px #dadada;
+    text-align: center;
+    transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    color: rgb(17, 214, 221);
+}
+/* .modal {
+    visibility: hidden;
+    grid-area: modal;
         width: 50vw;
         max-width: 400px;
         padding: 30px;
@@ -28,8 +179,13 @@ body {
         text-align: center;
         transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
         color: rgb(17, 214, 221);
-}
+} */
 .open-modal{
+    grid-area: 'modal';
     display: block;
+    position: fixed;
+    top: 45%;
+    height: 100fr;
+    width: 150fr;
     opacity: 1;
 }

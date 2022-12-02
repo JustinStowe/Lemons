@@ -1,6 +1,9 @@
 body {
     background-color: aquamarine;
 }
+section{
+    font-size: x-large;
+}
 main{
     display: flex;
     align-items: flex-end;

@@ -25,8 +25,7 @@
             <div>
                 <table>
                     <tr>
-                        <th>month</th>
-                        <th>Current</th>
+                        <th>Day</th>
                         <th>Last</th>
                         <th>Best</th>
                     </tr>
@@ -34,11 +33,9 @@
                         <th>Revenue</th>
                         <th><span></span></th>
                         <th><span></span></th>
-                        <th><span></span></th>
                     </tr>
                     <tr>
                         <th>Stock Used</th>
-                        <th><span></span></th>
                         <th><span></span></th>
                         <th><span></span></th>
                     </tr>
@@ -46,11 +43,9 @@
                         <th>Stock Lost</th>
                         <th><span></span></th>
                         <th><span></span></th>
-                        <th><span></span></th>
                     </tr>
                     <tr>
                         <th>Gross Profit</th>
-                        <th><span></span></th>
                         <th><span></span></th>
                         <th><span></span></th>
                     </tr>
@@ -58,11 +53,9 @@
                         <th>Gross margin</th>
                         <th><span></span></th>
                         <th><span></span></th>
-                        <th><span></span></th>
                     </tr>
                     <tr>
                         <th>Rents</th>
-                        <th><span></span></th>
                         <th><span></span></th>
                         <th><span></span></th>
                     </tr>
@@ -70,17 +63,14 @@
                         <th>Marketing</th>
                         <th><span></span></th>
                         <th><span></span></th>
-                        <th><span></span></th>
                     </tr>
                     <tr>
                         <th>Total Expense</th>
                         <th><span></span></th>
                         <th><span></span></th>
-                        <th><span></span></th>
                     </tr>
                     <tr>
                         <th>Earnings</th>
-                        <th><span></span></th>
                         <th><span></span></th>
                         <th><span></span></th>
                     </tr>
@@ -90,22 +80,38 @@
     
         <div class="rent-modal">
             <h2>choose where you want to set up your stand and how much it will cost you.</h2>
+                <img src="" alt="test">
             <div class="game-specific-buttons">
-                <button id="new-game">New Game</button>
-                <button id="load-save">Saved Game</button>
+                <button class="prev">Previous</button>
+                <button class="next">next</button>
             </div>
         </div>
     
         <div class="upgrades-modal">
             <h2>Lets get some upgrades</h2>
-            <div class="game-specific-buttons">
-                <button id="new-game">New Game</button>
-                <button id="load-save">Saved Game</button>
-            </div>
+            <ul class="upgrade-items">
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+            </ul>
         </div>
     
         <div class="staff-modal">
             <h2>hire,review, and fire staff</h2>
+            <ul>
+                <li><img src="" alt=""> <button>hire</button></li>
+                <li><img src="" alt=""> <button>hire</button></li>
+                <li><img src="" alt=""> <button>hire</button></li>
+                <li><img src="" alt=""> <button>hire</button></li>
+                <li><img src="" alt=""> <button>hire</button></li>
+                <li><img src="" alt=""> <button>hire</button></li>
+            </ul>
             <div class="game-specific-buttons">
                 <button id="new-game">New Game</button>
                 <button id="load-save">Saved Game</button>
@@ -114,6 +120,17 @@
     
         <div class="marketing-modal">
             <h2>Choose your marketing tactics</h2>
+            <ul class="pr-tactics">
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+                <li><img src="" alt=""> <button>Buy</button></li>
+            </ul>
             <div class="game-specific-buttons">
                 <button id="new-game">New Game</button>
                 <button id="load-save">Saved Game</button>
@@ -121,6 +138,15 @@
         </div>
         <div class="recipe-modal">
             <h2>Adjust your recipe</h2>
+            <h3>Lemons</h3>
+                <p>per pitcher</p>
+                <h4><button>minus</button> <span>0</span> <button>add</button></h4>
+            <h3>sugar</h3>
+                <p>per pitcher</p>
+                <h4><button>minus</button> <span>0</span> <button>add</button></h4>
+            <h3>ice</h3>
+                <p>per cup</p>
+                <h4><button>minus</button> <span>0</span> <button>add</button></h4>
             <div class="game-specific-buttons">
                 <button id="new-game">New Game</button>
                 <button id="load-save">Saved Game</button>
@@ -128,9 +154,20 @@
         </div>
         <div class="supplies-modal">
             <h2>Buy some supplies</h2>
+            <h3>lemons</h3>
+            <h4><button>minus</button> <span>0</span> <button>add</button></h4>
+            <h3>sugar</h3>
+            <h4><button>minus</button> <span>0</span> <button>add</button></h4>
+            <h3>cups</h3>
+            <h4><button>minus</button> <span>0</span> <button>add</button></h4>
+            <h3>Ice</h3>
+            <h4><button>minus</button> <span>0</span> <button>add</button></h4>
+            <div>
+                <h2>Total Cost: <span>0</span></h2>
+            </div>
             <div class="game-specific-buttons">
-                <button id="new-game">New Game</button>
-                <button id="load-save">Saved Game</button>
+                <button id="cancel-buy">Cancel</button>
+                <button id="buy-goods">Buy</button>
             </div>
         </div>
     </div>

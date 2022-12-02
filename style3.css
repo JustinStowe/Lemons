@@ -189,3 +189,6 @@ body {
     width: 150fr;
     opacity: 1;
 }
+.upgrade-items{
+    list-style: none;
+}

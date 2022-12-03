@@ -192,10 +192,13 @@ main {
     display: block;
     position: fixed;
     top: 45%;
-    height: 30em;
+    height: 40em;
     width: 30em;
     opacity: 1;
 }
 .upgrade-items{
     list-style: none;
+}
+.remove-button{
+    visibility: hidden;
 }

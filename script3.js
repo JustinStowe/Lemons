@@ -81,30 +81,22 @@ const daleCarnegie = new Hireling("Dale Carnegie", 1000, 500, 100);
 const neighborhood = new Locale("neighborhood", 0, 10, 1);
 const park = new Locale("park", 5, 20, 0);
 const downTown = new Locale("down town", 15, 40, 0);
-const mall = new Locale("mall", 25, 80, 0);
 const beach = new Locale("beach", 30, 120, 0);
+const hexaStadium = new Locale("The Hexa-Stadium", 100, 800, 0);
 /* ======================
  GLOBAL VARS
 =========================*/
-const player = {
-  money: 20,
-  lemons: 0,
-  sugar: 0,
-  cups: 0,
-  ice: 0,
-  tools: [],
-};
-let currentImgIndex = 0;
-let previousImgIndex = 0;
+
 const lemonadeStands = [woodenStand, coolStand, pavilion, lemonadeHouse];
 const hirelings = [timmy, bob, jennifer, RonPopeil, daleCarnegie];
 const tools = [umbrella, iceMachine, boomBox, juicer, cashRegister, fridge];
-const locales = [neighborhood, park, downTown, mall, beach];
+const locales = [neighborhood, park, downTown, beach, hexaStadium];
 const localePics = [
   "images/neighborhood.png",
   "images/park.png",
   "images/downTown.png",
   "images/beach.png",
+  "images/hexastadium.png",
 ];
 let currentLocaleIndex = 0;
 /* ======================
@@ -120,9 +112,10 @@ const supplies = document.querySelector(".supplies");
 const savegame = document.querySelector(".save-game");
 const mainMenu = document.querySelector(".main-menu");
 const startDay = document.querySelector(".start-day");
-const images = document.querySelectorAll(".images");
-const next = document.querySelector(".next");
-const prev = document.querySelector(".prev");
+const localeInfo = document.querySelector(".locales");
+const nextLocale = document.querySelector(".next-locale");
+const prevLocale = document.querySelector(".prev-locale");
+const chooseLocale = document.querySelector(".this-locale");
 /* ==========modals===============*/
 const statsModal = document.querySelector(".stats-modal");
 const rentModal = document.querySelector(".rent-modal");
@@ -167,17 +160,33 @@ function closeModals() {
   recipeModal.classList.remove("open-modal");
   suppliesModal.classList.remove("open-modal");
 }
-function setLocales() {
-  rentModal.innerHTML = `
+function populateLocales() {
+  localeInfo.innerHTML = `
   <h2>choose where you want to set up your stand and how much it will cost you.</h2>
-                <img src="${localePics[currentLocaleIndex]}" alt="">
-          <h3>${localePics[currentLocaleIndex.name]}</h3>
-          <h4>costs: ${localePics[currentLocaleIndex].rent} daily
-            <div class="game-specific-buttons">
-                <button class="prev-locale">Previous</button>
-                <button class="next-locale">next</button>
-            </div>
+                <img class="locale-pic" src="${localePics[currentLocaleIndex]}" alt="test" height="374px" width="463px">
+          <h3>${locales[currentLocaleIndex].name}</h3>
+          <h4>costs: ${locales[currentLocaleIndex].rent} daily
   `;
+}
+function localeBtns(evt) {
+  if (evt.target.classList.contains("next-locale")) {
+    if (currentLocaleIndex < localePics.length - 1) {
+      currentLocaleIndex += 1;
+    } else {
+      currentLocaleIndex = 0;
+    }
+  }
+  if (evt.target.classList.contains("prev-locale")) {
+    if (currentLocaleIndex === 0) {
+      currentLocaleIndex = localePics.length - 1;
+    } else {
+      currentLocaleIndex -= 1;
+    }
+  }
+  if (evt.target.classList.contains(".this-locale")) {
+    rentModal.classList.remove("open-modal");
+  }
+  populateLocales();
 }
 function setupTools() {
   upgradeModal.innerHTML = `
@@ -208,29 +217,27 @@ marketing.addEventListener("click", toggleModals);
 recipe.addEventListener("click", toggleModals);
 supplies.addEventListener("click", toggleModals);
 savegame.addEventListener("click", saveMyGame);
-
+nextLocale.addEventListener("click", localeBtns);
+prevLocale.addEventListener("click", localeBtns);
+chooseLocale.addEventListener("click", localeBtns);
 mainMenu.addEventListener("click", () => {
   document.location.href = "index2.html";
 });
 startDay.addEventListener("click", () => {
   document.location.href = "index4.html";
 });
-// next.addEventListener("click", () => {
-//   previousImgIndex = currentImgIndex;
-//   currentImgIndex < images.length - 1
-//     ? (currentImgIndex += 1)
-//     : (currentImgIndex = 0);
-
-//   images[previousImgIndex].style.display = "none";
-//   images[currentImgIndex].style.display = "block";
-// });
-// prev.addEventListener("click", () => {
-//   previousImgIndex = currentImgIndex;
-
-//   currentImgIndex > 0
-//     ? (currentImgIndex -= 1)
-//     : (currentImgIndex = images.length - 1);
-
-//   images[previousImgIndex].style.display = "none";
-//   images[currentImgIndex].style.display = "block";
-// });
+window.onload = () => {
+  populateLocales();
+};
+/* =============================
+PLAYER
+============================= */
+const player = {
+  money: 20,
+  locale: locales[currentLocaleIndex],
+  lemons: 0,
+  sugar: 0,
+  cups: 0,
+  ice: 0,
+  tools: [],
+};

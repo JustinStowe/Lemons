@@ -148,6 +148,7 @@ const nextLocale = document.querySelector(".next-locale");
 const prevLocale = document.querySelector(".prev-locale");
 const chooseLocale = document.querySelector(".this-locale");
 const upgradeItemList = document.querySelector(".upgrade-items");
+const playerStats = document.querySelector(".player-information");
 /* ==========modals===============*/
 const statsModal = document.querySelector(".stats-modal");
 const rentModal = document.querySelector(".rent-modal");
@@ -326,6 +327,7 @@ function buyTools(evt) {
     }
   }
 }
+function populatePlayerStats() {}
 function saveMyGame() {}
 /* =============================
 PLAYER

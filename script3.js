@@ -100,8 +100,13 @@ const lemonadeStands = [woodenStand, coolStand, pavilion, lemonadeHouse];
 const hirelings = [timmy, bob, jennifer, RonPopeil, daleCarnegie];
 const tools = [umbrella, iceMachine, boomBox, juicer, cashRegister, fridge];
 const locales = [neighborhood, park, downTown, mall, beach];
-const localePics = [];
-
+const localePics = [
+  "images/neighborhood.png",
+  "images/park.png",
+  "images/downTown.png",
+  "images/beach.png",
+];
+let currentLocaleIndex = 0;
 /* ======================
  DOM STUFF
 =========================*/
@@ -188,11 +193,6 @@ function setupTools() {
                 <li><img src="" alt=""> <button>Buy</button></li>
                 <li><img src="" alt=""> <button>Buy</button></li>
             </ul>
-            
-            <div class="game-specific-buttons">
-                <button id="new-game">New Game</button>
-                <button id="load-save">Saved Game</button>
-            </div>
 
   `;
 }
@@ -208,6 +208,13 @@ marketing.addEventListener("click", toggleModals);
 recipe.addEventListener("click", toggleModals);
 supplies.addEventListener("click", toggleModals);
 savegame.addEventListener("click", saveMyGame);
+
+mainMenu.addEventListener("click", () => {
+  document.location.href = "index2.html";
+});
+startDay.addEventListener("click", () => {
+  document.location.href = "index4.html";
+});
 // next.addEventListener("click", () => {
 //   previousImgIndex = currentImgIndex;
 //   currentImgIndex < images.length - 1
@@ -227,9 +234,3 @@ savegame.addEventListener("click", saveMyGame);
 //   images[previousImgIndex].style.display = "none";
 //   images[currentImgIndex].style.display = "block";
 // });
-mainMenu.addEventListener("click", () => {
-  document.location.href = "index2.html";
-});
-startDay.addEventListener("click", () => {
-  document.location.href = "index4.html";
-});

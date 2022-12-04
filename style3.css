@@ -1,16 +1,17 @@
 body{
-    display: block;
+    background-color: aquamarine;
 }
 main {
-    background-color: aquamarine;
+    
     display: grid;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     grid-template:
-    [header-left]'topButtons localeData' 10em [header-right]
-    [main-left]'playerStats localData' 5em [main-right]
-    [main-left]'modal localPicture' 40em [main-right]
-    [footer-left]'bottomButtons localeFlavorText' 20em [footer-right]
+    [header-left]'topButtons playerStats' 10vh [header-right]
+    [main-left]'modal localeData' 25vh [main-right]
+    [main-middle-left]'modal localPicture'10vh[main-middle-right]
+    [main-left]'modal localePicture' 40vh [main-right]
+    [footer-left]'bottomButtons localeFlavorText' 15vh [footer-right]
     
 
 
@@ -23,22 +24,37 @@ main {
     
 }
 .button-container> button{
-    font-size: xx-large;
-    padding: 1em;
+    font-size: x-large;
+    padding: 2vh 2vw;
 }
 
 .player-information{
+    border: 0.5vh black;
     grid-area: playerStats;
+    display: flex;
+    justify-content: center;
+    align-items:flex-start ;
 }
-.player-information >ul{
+
+ul{
     list-style: none;
+}
+.inventory-list > li{
+    display: inline;
+    margin: 0 1vw;
 }
 .info {
     grid-area: localeData;
     
 }
-.picture-of-location {
+.picture{
     grid-area: localePicture;
+    
+}
+.current-location{
+    position: relative;
+    /* right: 1%;
+    top: 60%; */
 }
 
 .flavor-text {
@@ -58,36 +74,30 @@ main {
 }
 .bottom-button-container>button{
     font-size: xx-large;
-    padding: 1em;
-    margin: 0 .5em;
+    padding: 2vh 2vw;
+    margin: 0vh .5vw;
 }
 .stats-modal{
     display: none;
-    position: fixed;
-    top: 45%;
-    transform: translateY(-50%);
-    margin: 0 auto;
     background-color: black;
-    border-radius: 4px;
-    box-shadow: 4px 1px 10px 0px #dadada;
+    border-radius: 4vh;
+    box-shadow: 4vh 1vw 10vh 0vw #dadada;
     text-align: center;
     transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     color: rgb(17, 214, 221);
 }
 .rent-modal{
     display: none;
-    transform: translateY(-50%);
-    margin: 0 auto;
-    background-color: black;
-    border-radius: 4px;
-    box-shadow: 4px 1px 10px 0px #dadada;
-    text-align: center;
-    transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    color: rgb(17, 214, 221);
+        background-color: black;
+        border-radius: 4vh;
+        box-shadow: 4vh 1vw 10vh 0vw #dadada;
+        text-align: center;
+        transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        color: rgb(17, 214, 221);
 }
 .game-specific-buttons > button{
     font-size: x-large;
-    
+
 }
 .local-pic{
     max-width: 5em;
@@ -95,58 +105,48 @@ main {
 }
 .upgrades-modal{
     display: none;
-    transform: translateY(-50%);
-    margin: 0 auto;
-    background-color: black;
-    border-radius: 4px;
-    box-shadow: 4px 1px 10px 0px #dadada;
-    text-align: center;
-    transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    color: rgb(17, 214, 221);
+        background-color: black;
+        border-radius: 4vh;
+        box-shadow: 4vh 1vw 10vh 0vw #dadada;
+        text-align: center;
+        transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        color: rgb(17, 214, 221);
 }
 .staff-modal{
     display: none;
-    transform: translateY(-50%);
-    margin: 0 auto;
-    background-color: black;
-    border-radius: 4px;
-    box-shadow: 4px 1px 10px 0px #dadada;
-    text-align: center;
-    transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    color: rgb(17, 214, 221);
+        background-color: black;
+        border-radius: 4vh;
+        box-shadow: 4vh 1vw 10vh 0vw #dadada;
+        text-align: center;
+        transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        color: rgb(17, 214, 221);
 }
 .marketing-modal{
     display: none;
-    transform: translateY(-50%);
-    margin: 0 auto;
-    background-color: black;
-    border-radius: 4px;
-    box-shadow: 4px 1px 10px 0px #dadada;
-    text-align: center;
-    transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    color: rgb(17, 214, 221);
+        background-color: black;
+        border-radius: 4vh;
+        box-shadow: 4vh 1vw 10vh 0vw #dadada;
+        text-align: center;
+        transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        color: rgb(17, 214, 221);
 }
 .recipe-modal{
     display: none;
-    transform: translateY(-50%);
-    margin: 0 auto;
-    background-color: black;
-    border-radius: 4px;
-    box-shadow: 4px 1px 10px 0px #dadada;
-    text-align: center;
-    transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    color: rgb(17, 214, 221);
+        background-color: black;
+        border-radius: 4vh;
+        box-shadow: 4vh 1vw 10vh 0vw #dadada;
+        text-align: center;
+        transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        color: rgb(17, 214, 221);
 }
 .supplies-modal{
     display: none;
-    transform: translateY(-50%);
-    margin: 0 auto;
-    background-color: black;
-    border-radius: 4px;
-    box-shadow: 4px 1px 10px 0px #dadada;
-    text-align: center;
-    transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    color: rgb(17, 214, 221);
+        background-color: black;
+        border-radius: 4vh;
+        box-shadow: 4vh 1vw 10vh 0vw #dadada;
+        text-align: center;
+        transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        color: rgb(17, 214, 221);
 }
 /* .modal {
     visibility: hidden;
@@ -168,11 +168,14 @@ main {
         color: rgb(17, 214, 221);
 } */
 .open-modal{
-    display:block;
-    position: absolute;
-    top: 45%;
-    height: 40em;
-    width: 30em;
+    grid-area: modal;
+    display:inherit;
+    max-height: inherit;
+    max-width: inherit;
+    /* position: absolute;
+    top: 60%; */
+    height: 65vh;
+    width: 30vw;
     opacity: 1;
 }
 .upgrade-items{

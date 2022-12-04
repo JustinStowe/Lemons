@@ -76,7 +76,7 @@ const fridge = new Tool("fridge", 800, 1);
 const timmy = new Hireling("lil timmy", 0, 1, 0.5);
 const bob = new Hireling("bob", 20, 10, 1);
 const jennifer = new Hireling("Jennifer", 100, 50, 5);
-const RonPopeil = new Hireling("Ron Popeil", 200, 100, 20);
+const ronPopeil = new Hireling("Ron Popeil", 200, 100, 20);
 const daleCarnegie = new Hireling("Dale Carnegie", 1000, 500, 100);
 /* Class seperation */
 const neighborhood = new Locale(
@@ -119,7 +119,7 @@ const hexaStadium = new Locale(
 =========================*/
 
 const lemonadeStands = [woodenStand, coolStand, pavilion, lemonadeHouse];
-const hirelings = [timmy, bob, jennifer, RonPopeil, daleCarnegie];
+const hirelings = [timmy, bob, jennifer, ronPopeil, daleCarnegie];
 const tools = [umbrella, iceMachine, boomBox, juicer, cashRegister, fridge];
 const locales = [neighborhood, park, downTown, beach, hexaStadium];
 const localePics = [
@@ -130,6 +130,9 @@ const localePics = [
   "images/hexastadium.png",
 ];
 let currentLocaleIndex = 0;
+let timeCount = 0;
+let weather = ["sunny", "cloudy", "raining"];
+let Temp = "40 to 100";
 /* ======================
  DOM STUFF
 =========================*/
@@ -146,9 +149,12 @@ const startDay = document.querySelector(".start-day");
 const localeInfo = document.querySelector(".locales");
 const nextLocale = document.querySelector(".next-locale");
 const prevLocale = document.querySelector(".prev-locale");
-const chooseLocale = document.querySelector(".this-locale");
+const chooseLocale = document.querySelector(".here");
 const upgradeItemList = document.querySelector(".upgrade-items");
 const playerStats = document.querySelector(".player-information");
+const localePicture = document.querySelector(".picture");
+const flavortext = document.querySelector(".flavor-text");
+const staffList = document.querySelector(".staff-list");
 /* ==========modals===============*/
 const statsModal = document.querySelector(".stats-modal");
 const rentModal = document.querySelector(".rent-modal");
@@ -196,7 +202,7 @@ function closeModals() {
 function populateLocales() {
   localeInfo.innerHTML = `
   <h2>choose where you want to set up your stand and how much it will cost you.</h2>
-                <img class="locale-pic" src="${localePics[currentLocaleIndex]}" alt="test" height="374px" width="463px">
+                <img class="locale-pic" src="${localePics[currentLocaleIndex]}" alt="test" height="374vh" width="463vw">
           <h3>${locales[currentLocaleIndex].name}</h3>
           <p>${locales[currentLocaleIndex].info}</p>
           <h4>costs: ${locales[currentLocaleIndex].rent} daily
@@ -217,10 +223,16 @@ function localeBtns(evt) {
       currentLocaleIndex -= 1;
     }
   }
-  if (evt.target.classList.contains(".this-locale")) {
-    rentModal.classList.remove("open-modal");
+  if (evt.target.classList.contains("here")) {
+    populateLocalePicture();
   }
   populateLocales();
+}
+function populateLocalePicture() {
+  localePicture.innerHTML = `
+  <img class="current-location" src="${localePics[currentLocaleIndex]}" alt="Picture" height="370vh" width="500vw">
+  `;
+  flavortext.innerHTML = `${locales[currentLocaleIndex].info}`;
 }
 function populateTools() {
   upgradeItemList.innerHTML = `
@@ -277,6 +289,7 @@ function buyTools(evt) {
       player.money -= umbrella.cost;
       player.tools.push(umbrella);
       populateTools();
+      populatePlayerStats();
     } else {
       alert("you don't have enough money for this");
     }
@@ -286,6 +299,7 @@ function buyTools(evt) {
       player.money -= iceMachine.cost;
       player.tools.push(iceMachine);
       populateTools();
+      populatePlayerStats();
     } else {
       alert("you don't have enough money for this");
     }
@@ -295,6 +309,7 @@ function buyTools(evt) {
       player.money -= boomBox.cost;
       player.tools.push(boomBox);
       populateTools();
+      populatePlayerStats();
     } else {
       alert("you don't have enough money for this");
     }
@@ -304,6 +319,7 @@ function buyTools(evt) {
       player.money -= juicer.cost;
       player.tools.push(juicer);
       populateTools();
+      populatePlayerStats();
     } else {
       alert("you don't have enough money for this");
     }
@@ -313,6 +329,7 @@ function buyTools(evt) {
       player.money -= cashRegister.cost;
       player.tools.push(cashRegister);
       populateTools();
+      populatePlayerStats();
     } else {
       alert("you don't have enough money for this");
     }
@@ -322,12 +339,96 @@ function buyTools(evt) {
       player.money -= fridge.cost;
       player.tools.push(fridge);
       populateTools();
+      populatePlayerStats();
     } else {
       alert("you don't have enough money for this");
     }
   }
 }
-function populatePlayerStats() {}
+function populatePlayerStats() {
+  playerStats.innerHTML = `
+  <div class= "player-details">
+  <h2>player</h2>
+    <h4>Money: ${player.money}</h4>
+  </div>
+  <div>
+    <h2>Inventory</h2>
+      <ul class= "iventory-list">
+        <li>Lemons: ${player.lemons} </li>
+        <li>Sugar: ${player.sugar} </li>
+        <li>Ice: ${player.ice} </li>
+        <li>Cups: ${player.cups} </li>
+      </ul>
+  </div>
+  <div> <h2>Tools: </h2>
+    <ul>${player.tools
+      .map((item) => {
+        return `<li>
+      ${item.name} </li>`;
+      })
+      .join("")}</ul>
+  </div>
+  <div> <h2>Staff: </h2>
+    <ul>${player.staff
+      .map((item) => {
+        return `<li>
+      ${item.name}</li>`;
+      })
+      .join("")}</ul>
+    </div> 
+    `;
+}
+function populateStaff() {
+  //const hirelings = [timmy, bob, jennifer, RonPopeil, daleCarnegie];
+  staffList.innerHTML = `
+    <h2> Hire, review, and Fire staff memebers</h2>
+    <ul>
+        <li id="timmy"><button class="hire-btn">hire</button> ${hirelings[0].name}</li>
+        <p>Cost to hire: ${hirelings[0].cost} PayRate: ${hirelings[0].payrate}</p> 
+        <li id="bob"> <button class="hire-btn">hire</button> ${hirelings[1].name} </li>
+        <p>Cost to hire: ${hirelings[1].cost} PayRate: ${hirelings[1].payrate}</p> 
+        <li id="jennifer"> <button class="hire-btn">hire</button> ${hirelings[2].name} </li>
+        <p>Cost to hire: ${hirelings[2].cost} PayRate: ${hirelings[2].payrate}</p> 
+        <li id="ron-popeil"> <button class="hire-btn">hire</button> ${hirelings[3].name} </li>
+        <p>Cost to hire: ${hirelings[3].cost} PayRate: ${hirelings[3].payrate}</p> 
+        <li id= "dave-carnegie"> <button class="hire-btn">hire</button> ${hirelings[4].name} </li>
+        <p>Cost to hire: ${hirelings[4].cost} PayRate: ${hirelings[4].payrate}</p> 
+        
+      </ul>
+  `;
+  const hireBtns = document.querySelectorAll(".hire-btn");
+  hireBtns.forEach((item) => {
+    item.addEventListener("click", hireStaff);
+  });
+  player.staff.forEach((index) => {
+    if (player.staff.includes(timmy)) {
+      const timmyLi = document.querySelector("#timmy");
+      timmyLi.innerHTML = `<button>Fire</button> ${hirelings[0].name} `;
+    }
+    if (player.staff.includes(bob)) {
+      const bobLi = document.querySelector("#bob");
+      bobLi.innerHTML = ` <button>Fire</button> ${hirelings[1].name} `;
+    }
+    if (player.staff.includes(jennifer)) {
+      const jenniferLi = document.querySelector("#jennifer");
+      jenniferLi.innerHTML = ` <button>Fire</button> ${hirelings[2].name} `;
+    }
+    if (player.staff.includes(ronPopeil)) {
+      const ronPopeLi = document.querySelector("#ron-popeil");
+      ronPopeLi.innerHTML = ` <button>Fire</button> ${hirelings[3].name} `;
+    }
+    if (player.staff.includes(daleCarnegie)) {
+      const daleCarnegieLi = document.querySelector("#dale-carnegie");
+      daleCarnegieLi.innerHTML = ` <button>Fire</button> ${hirelings[4].name} `;
+    }
+  });
+  const fireBtns = document.querySelectorAll(".fire-btn");
+  fireBtns.forEach((item) => {
+    item.addEventListener("click", fireStaff);
+  });
+}
+function hireStaff() {}
+function fireStaff() {}
 function saveMyGame() {}
 /* =============================
 PLAYER
@@ -340,6 +441,7 @@ const player = {
   cups: 0,
   ice: 0,
   tools: [],
+  staff: [],
 };
 /* =============================
 EVENT LISTENERS
@@ -364,4 +466,7 @@ startDay.addEventListener("click", () => {
 window.onload = () => {
   populateLocales();
   populateTools();
+  populatePlayerStats();
+  populateLocalePicture();
+  populateStaff();
 };

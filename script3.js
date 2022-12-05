@@ -383,15 +383,15 @@ function populateStaff() {
   staffList.innerHTML = `
     <h2> Hire, review, and Fire staff memebers</h2>
     <ul>
-        <li id="timmy"><button class="hire-btn">hire</button> ${hirelings[0].name}</li>
+        <li id="timmy"><button class=" timmy hire-btn">hire</button> ${hirelings[0].name}</li>
         <p>Cost to hire: ${hirelings[0].cost} PayRate: ${hirelings[0].payrate}</p> 
-        <li id="bob"> <button class="hire-btn">hire</button> ${hirelings[1].name} </li>
+        <li id="bob"> <button class=" bob hire-btn">hire</button> ${hirelings[1].name} </li>
         <p>Cost to hire: ${hirelings[1].cost} PayRate: ${hirelings[1].payrate}</p> 
-        <li id="jennifer"> <button class="hire-btn">hire</button> ${hirelings[2].name} </li>
+        <li id="jennifer"> <button class=" jennifer hire-btn">hire</button> ${hirelings[2].name} </li>
         <p>Cost to hire: ${hirelings[2].cost} PayRate: ${hirelings[2].payrate}</p> 
-        <li id="ron-popeil"> <button class="hire-btn">hire</button> ${hirelings[3].name} </li>
+        <li id="ron-popeil"> <button class=" ron-popeil hire-btn">hire</button> ${hirelings[3].name} </li>
         <p>Cost to hire: ${hirelings[3].cost} PayRate: ${hirelings[3].payrate}</p> 
-        <li id= "dave-carnegie"> <button class="hire-btn">hire</button> ${hirelings[4].name} </li>
+        <li id="dale-carnegie"> <button class="dale-carnegie hire-btn">hire</button> ${hirelings[4].name} </li>
         <p>Cost to hire: ${hirelings[4].cost} PayRate: ${hirelings[4].payrate}</p> 
         
       </ul>
@@ -403,23 +403,23 @@ function populateStaff() {
   player.staff.forEach((index) => {
     if (player.staff.includes(timmy)) {
       const timmyLi = document.querySelector("#timmy");
-      timmyLi.innerHTML = `<button>Fire</button> ${hirelings[0].name} `;
+      timmyLi.innerHTML = `<button class = 'timmy fire-btn'>Fire</button> ${hirelings[0].name} `;
     }
     if (player.staff.includes(bob)) {
       const bobLi = document.querySelector("#bob");
-      bobLi.innerHTML = ` <button>Fire</button> ${hirelings[1].name} `;
+      bobLi.innerHTML = ` <button class = ' bobfire-btn'>Fire</button> ${hirelings[1].name} `;
     }
     if (player.staff.includes(jennifer)) {
       const jenniferLi = document.querySelector("#jennifer");
-      jenniferLi.innerHTML = ` <button>Fire</button> ${hirelings[2].name} `;
+      jenniferLi.innerHTML = ` <button class = 'jennifer fire-btn'>Fire</button> ${hirelings[2].name} `;
     }
     if (player.staff.includes(ronPopeil)) {
       const ronPopeLi = document.querySelector("#ron-popeil");
-      ronPopeLi.innerHTML = ` <button>Fire</button> ${hirelings[3].name} `;
+      ronPopeLi.innerHTML = ` <button class = ' ron-popeil fire-btn'>Fire</button> ${hirelings[3].name} `;
     }
     if (player.staff.includes(daleCarnegie)) {
       const daleCarnegieLi = document.querySelector("#dale-carnegie");
-      daleCarnegieLi.innerHTML = ` <button>Fire</button> ${hirelings[4].name} `;
+      daleCarnegieLi.innerHTML = ` <button class = ' dale-carnegie fire-btn'>Fire</button> ${hirelings[4].name} `;
     }
   });
   const fireBtns = document.querySelectorAll(".fire-btn");
@@ -427,8 +427,91 @@ function populateStaff() {
     item.addEventListener("click", fireStaff);
   });
 }
-function hireStaff() {}
-function fireStaff() {}
+function hireStaff(evt) {
+  if (evt.target.classList.contains("timmy")) {
+    if (player.money >= timmy.cost) {
+      player.money -= timmy.cost;
+      player.staff.push(timmy);
+      populateStaff();
+      populatePlayerStats();
+    } else {
+      alert("you cannot afford to hire this person right now");
+    }
+  }
+  if (evt.target.classList.contains("bob")) {
+    if (player.money >= bob.cost) {
+      player.money -= bob.cost;
+      player.staff.push(bob);
+      populateStaff();
+      populatePlayerStats();
+    } else {
+      alert("you cannot afford to hire this person right now");
+    }
+  }
+  if (evt.target.classList.contains("jennifer")) {
+    if (player.money >= jennifer.cost) {
+      player.money -= jennifer.cost;
+      player.staff.push(jennifer);
+      populateStaff();
+      populatePlayerStats();
+    } else {
+      alert("you cannot afford to hire this person right now");
+    }
+  }
+  if (evt.target.classList.contains("ron-popeil")) {
+    if (player.money >= ronPopeil.cost) {
+      player.money -= ronPopeil.cost;
+      player.staff.push(ronPopeil);
+      populateStaff();
+      populatePlayerStats();
+    } else {
+      alert("you cannot afford to hire this person right now");
+    }
+  }
+  if (evt.target.classList.contains("dale-carnegie")) {
+    if (player.money >= daleCarnegie.cost) {
+      player.money -= daleCarnegie.cost;
+      player.staff.push(daleCarnegie);
+      populateStaff();
+      populatePlayerStats();
+    } else {
+      alert("you cannot afford to hire this person right now");
+    }
+  }
+}
+function fireStaff(evt) {
+  if (evt.target.classList.contains("timmy")) {
+    const firedStaff = player.staff.indexOf(timmy);
+    player.staff.splice(firedStaff, 1);
+    populateStaff();
+    populatePlayerStats();
+  }
+  if (evt.target.classList.contains("bob")) {
+    const firedStaff = player.staff.indexOf(bob);
+
+    player.staff.splice(firedStaff, 1);
+    populateStaff();
+    populatePlayerStats();
+  }
+  if (evt.target.classList.contains("jennifer")) {
+    const firedStaff = player.staff.indexOf(jennifer);
+    player.staff.splice(firedStaff, 1);
+    populateStaff();
+    populatePlayerStats();
+  }
+  if (evt.target.classList.contains("ron-popeil")) {
+    const firedStaff = player.staff.indexOf(ronPopeil);
+    player.staff.splice(firedStaff, 1);
+    populateStaff();
+    populatePlayerStats();
+  }
+  if (evt.target.classList.contains("dale-carnegie")) {
+    const firedStaff = player.staff.indexOf(daleCarnegie);
+    player.staff.splice(firedStaff, 1);
+    populateStaff();
+    populatePlayerStats();
+  }
+}
 function saveMyGame() {}
 /* =============================
 PLAYER

@@ -66,6 +66,15 @@ class Locale {
     this.popularity = popularity;
   }
 }
+
+class MarketingMethod {
+  constructor(name, cost, bonus) {
+    this.name = name;
+    this.cost = cost;
+    this.bonus = bonus;
+  }
+}
+/* Class seperation */
 const umbrella = new Tool("umbrella", 99, 5);
 const iceMachine = new Tool("ice-machine", 99, 1);
 const boomBox = new Tool("Boom-Box", 149, 2);
@@ -114,6 +123,12 @@ const hexaStadium = new Locale(
   800,
   0
 );
+/* Class seperation */
+const flyer = new MarketingMethod("flyer", 1, 1);
+const socialMedia = new MarketingMethod("social media", 5, 2);
+const newspaper = new MarketingMethod("newspaper", 5, 2);
+const radio = new MarketingMethod("radio", 10, 3);
+const tv = new MarketingMethod("TV", 20, 4);
 /* ======================
  GLOBAL VARS
 =========================*/
@@ -129,6 +144,7 @@ const localePics = [
   "images/beach.png",
   "images/hexastadium.png",
 ];
+const marketingTactics = [flyer, socialMedia, newspaper, radio, tv];
 let currentLocaleIndex = 0;
 let timeCount = 0;
 let weather = ["sunny", "cloudy", "raining"];
@@ -199,6 +215,9 @@ function closeModals() {
   recipeModal.classList.remove("open-modal");
   suppliesModal.classList.remove("open-modal");
 }
+/* =============================
+ POPULATE FUNCTIONS
+============================= */
 function populateLocales() {
   localeInfo.innerHTML = `
   <h2>choose where you want to set up your stand and how much it will cost you.</h2>
@@ -208,31 +227,93 @@ function populateLocales() {
           <h4>costs: ${locales[currentLocaleIndex].rent} daily
   `;
 }
-function localeBtns(evt) {
-  if (evt.target.classList.contains("next-locale")) {
-    if (currentLocaleIndex < localePics.length - 1) {
-      currentLocaleIndex += 1;
-    } else {
-      currentLocaleIndex = 0;
+function populateStaff() {
+  //const hirelings = [timmy, bob, jennifer, RonPopeil, daleCarnegie];
+  staffList.innerHTML = `
+    <h2> Hire, review, and Fire staff memebers</h2>
+    <ul>
+        <li id="timmy"><button class=" timmy hire-btn">hire</button> ${hirelings[0].name}</li>
+        <p>Cost to hire: ${hirelings[0].cost} PayRate: ${hirelings[0].payrate}</p> 
+        <li id="bob"> <button class=" bob hire-btn">hire</button> ${hirelings[1].name} </li>
+        <p>Cost to hire: ${hirelings[1].cost} PayRate: ${hirelings[1].payrate}</p> 
+        <li id="jennifer"> <button class=" jennifer hire-btn">hire</button> ${hirelings[2].name} </li>
+        <p>Cost to hire: ${hirelings[2].cost} PayRate: ${hirelings[2].payrate}</p> 
+        <li id="ron-popeil"> <button class=" ron-popeil hire-btn">hire</button> ${hirelings[3].name} </li>
+        <p>Cost to hire: ${hirelings[3].cost} PayRate: ${hirelings[3].payrate}</p> 
+        <li id="dale-carnegie"> <button class="dale-carnegie hire-btn">hire</button> ${hirelings[4].name} </li>
+        <p>Cost to hire: ${hirelings[4].cost} PayRate: ${hirelings[4].payrate}</p> 
+        
+      </ul>
+  `;
+  const hireBtns = document.querySelectorAll(".hire-btn");
+  hireBtns.forEach((item) => {
+    item.addEventListener("click", hireStaff);
+  });
+  player.staff.forEach((index) => {
+    if (player.staff.includes(timmy)) {
+      const timmyLi = document.querySelector("#timmy");
+      timmyLi.innerHTML = `<button class = 'timmy fire-btn'>Fire</button> ${hirelings[0].name} `;
     }
-  }
-  if (evt.target.classList.contains("prev-locale")) {
-    if (currentLocaleIndex === 0) {
-      currentLocaleIndex = localePics.length - 1;
-    } else {
-      currentLocaleIndex -= 1;
+    if (player.staff.includes(bob)) {
+      const bobLi = document.querySelector("#bob");
+      bobLi.innerHTML = ` <button class = ' bobfire-btn'>Fire</button> ${hirelings[1].name} `;
     }
-  }
-  if (evt.target.classList.contains("here")) {
-    populateLocalePicture();
-  }
-  populateLocales();
+    if (player.staff.includes(jennifer)) {
+      const jenniferLi = document.querySelector("#jennifer");
+      jenniferLi.innerHTML = ` <button class = 'jennifer fire-btn'>Fire</button> ${hirelings[2].name} `;
+    }
+    if (player.staff.includes(ronPopeil)) {
+      const ronPopeLi = document.querySelector("#ron-popeil");
+      ronPopeLi.innerHTML = ` <button class = ' ron-popeil fire-btn'>Fire</button> ${hirelings[3].name} `;
+    }
+    if (player.staff.includes(daleCarnegie)) {
+      const daleCarnegieLi = document.querySelector("#dale-carnegie");
+      daleCarnegieLi.innerHTML = ` <button class = ' dale-carnegie fire-btn'>Fire</button> ${hirelings[4].name} `;
+    }
+  });
+  const fireBtns = document.querySelectorAll(".fire-btn");
+  fireBtns.forEach((item) => {
+    item.addEventListener("click", fireStaff);
+  });
 }
 function populateLocalePicture() {
   localePicture.innerHTML = `
   <img class="current-location" src="${localePics[currentLocaleIndex]}" alt="Picture" height="370vh" width="500vw">
   `;
   flavortext.innerHTML = `${locales[currentLocaleIndex].info}`;
+}
+function populatePlayerStats() {
+  playerStats.innerHTML = `
+  <div class= "player-details">
+  <h2>player</h2>
+    <h4>Money: ${player.money}</h4>
+  </div>
+  <div>
+    <h2>Inventory</h2>
+      <ul class= "iventory-list">
+        <li>Lemons: ${player.lemons} </li>
+        <li>Sugar: ${player.sugar} </li>
+        <li>Ice: ${player.ice} </li>
+        <li>Cups: ${player.cups} </li>
+      </ul>
+  </div>
+  <div> <h2>Tools: </h2>
+    <ul>${player.tools
+      .map((item) => {
+        return `<li>
+      ${item.name} </li>`;
+      })
+      .join("")}</ul>
+  </div>
+  <div> <h2>Staff: </h2>
+    <ul>${player.staff
+      .map((item) => {
+        return `<li>
+      ${item.name}</li>`;
+      })
+      .join("")}</ul>
+    </div> 
+    `;
 }
 function populateTools() {
   upgradeItemList.innerHTML = `
@@ -282,6 +363,72 @@ function populateTools() {
   toolBuyBtns.forEach((item) => {
     item.addEventListener("click", buyTools);
   });
+}
+function populateMarketing() {
+  marketingModal.innerHTML = `
+  <h2>Choose your marketing tactics</h2>
+            <ul class="pr-tactics">
+                <li id= 'flyer'><img src="" alt="">flyer<button class='flyer market-buy'>Buy</button></li>
+                <p>Costs: $1.00</p>
+                <li id= 'social-media'><img src="" alt="">social media<button class= 'social-media market-buy'>Buy</button></li>
+                <p>Costs: $5.00</p>
+                <li id= 'newspaper'><img src="" alt="">newspaper<button class= 'newspaper market-buy'>Buy</button></li>
+                <p>Costs: $5.00</p>
+                <li id= 'radio'><img src="" alt="">radio<button class= 'radio market-buy'>Buy</button></li>
+                <p>Costs: $10.00</p>
+                <li id= 'tv'><img src="" alt="">TV<button class= 'tv market-buy'>Buy</button></li>
+                <p>Costs: $20.00</p>
+            </ul>
+  `;
+  const marketingBtn = document.querySelectorAll(".market-buy");
+  marketingBtn.forEach((item) => {
+    item.addEventListener("click", buyMarketing);
+  });
+  player.marketing.forEach((index) => {
+    if (player.marketing.includes(flyer)) {
+      const flyerLi = document.querySelector("#flyer");
+      flyerLi.innerHTML = ` <img src="" alt="">flyer<span>Bought</span>`;
+    }
+    if (player.marketing.includes(socialMedia)) {
+      const socialMediaLi = document.querySelector("#social-media");
+      socialMediaLi.innerHTML = `<img src="" alt="">social media<span>Bought</span>`;
+    }
+    if (player.marketing.includes(newspaper)) {
+      const newspaperLi = document.querySelector("#newspaper");
+      newspaperLi.innerHTML = `<img src="" alt="">newspaper<span>Bought</span>`;
+    }
+    if (player.marketing.includes(radio)) {
+      const radioLi = document.querySelector("#radio");
+      radioLi.innerHTML = `<img src="" alt="">radio<span>Bought</span>`;
+    }
+    if (player.marketing.includes(tv)) {
+      const tvLi = document.querySelector("#tv");
+      tvLi.innerHTML = `<img src="" alt="">TV<span>Bought</span>`;
+    }
+  });
+}
+/* =============================
+BUTTON FUNCTIONS
+============================= */
+function localeBtns(evt) {
+  if (evt.target.classList.contains("next-locale")) {
+    if (currentLocaleIndex < localePics.length - 1) {
+      currentLocaleIndex += 1;
+    } else {
+      currentLocaleIndex = 0;
+    }
+  }
+  if (evt.target.classList.contains("prev-locale")) {
+    if (currentLocaleIndex === 0) {
+      currentLocaleIndex = localePics.length - 1;
+    } else {
+      currentLocaleIndex -= 1;
+    }
+  }
+  if (evt.target.classList.contains("here")) {
+    populateLocalePicture();
+  }
+  populateLocales();
 }
 function buyTools(evt) {
   if (evt.target.classList.contains("umbrella")) {
@@ -344,88 +491,6 @@ function buyTools(evt) {
       alert("you don't have enough money for this");
     }
   }
-}
-function populatePlayerStats() {
-  playerStats.innerHTML = `
-  <div class= "player-details">
-  <h2>player</h2>
-    <h4>Money: ${player.money}</h4>
-  </div>
-  <div>
-    <h2>Inventory</h2>
-      <ul class= "iventory-list">
-        <li>Lemons: ${player.lemons} </li>
-        <li>Sugar: ${player.sugar} </li>
-        <li>Ice: ${player.ice} </li>
-        <li>Cups: ${player.cups} </li>
-      </ul>
-  </div>
-  <div> <h2>Tools: </h2>
-    <ul>${player.tools
-      .map((item) => {
-        return `<li>
-      ${item.name} </li>`;
-      })
-      .join("")}</ul>
-  </div>
-  <div> <h2>Staff: </h2>
-    <ul>${player.staff
-      .map((item) => {
-        return `<li>
-      ${item.name}</li>`;
-      })
-      .join("")}</ul>
-    </div> 
-    `;
-}
-function populateStaff() {
-  //const hirelings = [timmy, bob, jennifer, RonPopeil, daleCarnegie];
-  staffList.innerHTML = `
-    <h2> Hire, review, and Fire staff memebers</h2>
-    <ul>
-        <li id="timmy"><button class=" timmy hire-btn">hire</button> ${hirelings[0].name}</li>
-        <p>Cost to hire: ${hirelings[0].cost} PayRate: ${hirelings[0].payrate}</p> 
-        <li id="bob"> <button class=" bob hire-btn">hire</button> ${hirelings[1].name} </li>
-        <p>Cost to hire: ${hirelings[1].cost} PayRate: ${hirelings[1].payrate}</p> 
-        <li id="jennifer"> <button class=" jennifer hire-btn">hire</button> ${hirelings[2].name} </li>
-        <p>Cost to hire: ${hirelings[2].cost} PayRate: ${hirelings[2].payrate}</p> 
-        <li id="ron-popeil"> <button class=" ron-popeil hire-btn">hire</button> ${hirelings[3].name} </li>
-        <p>Cost to hire: ${hirelings[3].cost} PayRate: ${hirelings[3].payrate}</p> 
-        <li id="dale-carnegie"> <button class="dale-carnegie hire-btn">hire</button> ${hirelings[4].name} </li>
-        <p>Cost to hire: ${hirelings[4].cost} PayRate: ${hirelings[4].payrate}</p> 
-        
-      </ul>
-  `;
-  const hireBtns = document.querySelectorAll(".hire-btn");
-  hireBtns.forEach((item) => {
-    item.addEventListener("click", hireStaff);
-  });
-  player.staff.forEach((index) => {
-    if (player.staff.includes(timmy)) {
-      const timmyLi = document.querySelector("#timmy");
-      timmyLi.innerHTML = `<button class = 'timmy fire-btn'>Fire</button> ${hirelings[0].name} `;
-    }
-    if (player.staff.includes(bob)) {
-      const bobLi = document.querySelector("#bob");
-      bobLi.innerHTML = ` <button class = ' bobfire-btn'>Fire</button> ${hirelings[1].name} `;
-    }
-    if (player.staff.includes(jennifer)) {
-      const jenniferLi = document.querySelector("#jennifer");
-      jenniferLi.innerHTML = ` <button class = 'jennifer fire-btn'>Fire</button> ${hirelings[2].name} `;
-    }
-    if (player.staff.includes(ronPopeil)) {
-      const ronPopeLi = document.querySelector("#ron-popeil");
-      ronPopeLi.innerHTML = ` <button class = ' ron-popeil fire-btn'>Fire</button> ${hirelings[3].name} `;
-    }
-    if (player.staff.includes(daleCarnegie)) {
-      const daleCarnegieLi = document.querySelector("#dale-carnegie");
-      daleCarnegieLi.innerHTML = ` <button class = ' dale-carnegie fire-btn'>Fire</button> ${hirelings[4].name} `;
-    }
-  });
-  const fireBtns = document.querySelectorAll(".fire-btn");
-  fireBtns.forEach((item) => {
-    item.addEventListener("click", fireStaff);
-  });
 }
 function hireStaff(evt) {
   if (evt.target.classList.contains("timmy")) {
@@ -512,6 +577,58 @@ function fireStaff(evt) {
     populatePlayerStats();
   }
 }
+function buyMarketing(evt) {
+  if (evt.target.classList.contains("flyer")) {
+    if (player.money >= flyer.cost) {
+      player.money -= flyer.cost;
+      player.marketing.push(flyer);
+      populateMarketing();
+      populatePlayerStats();
+    } else {
+      alert("you cannot afford this");
+    }
+  }
+  if (evt.target.classList.contains("social-media")) {
+    if (player.money >= socialMedia.cost) {
+      player.money -= socialMedia.cost;
+      player.marketing.push(socialMedia);
+      populateMarketing();
+      populatePlayerStats();
+    } else {
+      alert("you cannot afford this");
+    }
+  }
+  if (evt.target.classList.contains("newspaper")) {
+    if (player.money >= newspaper.cost) {
+      player.money -= newspaper.cost;
+      player.marketing.push(newspaper);
+      populateMarketing();
+      populatePlayerStats();
+    } else {
+      alert("you cannot afford this");
+    }
+  }
+  if (evt.target.classList.contains("radio")) {
+    if (player.money >= radio.cost) {
+      player.money -= radio.cost;
+      player.marketing.push(radio);
+      populateMarketing();
+      populatePlayerStats();
+    } else {
+      alert("you cannot afford this");
+    }
+  }
+  if (evt.target.classList.contains("tv")) {
+    if (player.money >= tv.cost) {
+      player.money -= tv.cost;
+      player.marketing.push(tv);
+      populateMarketing();
+      populatePlayerStats();
+    } else {
+      alert("you cannot afford this");
+    }
+  }
+}
 function saveMyGame() {}
 /* =============================
 PLAYER
@@ -525,6 +642,7 @@ const player = {
   ice: 0,
   tools: [],
   staff: [],
+  marketing: [],
 };
 /* =============================
 EVENT LISTENERS
@@ -552,4 +670,5 @@ window.onload = () => {
   populatePlayerStats();
   populateLocalePicture();
   populateStaff();
+  populateMarketing();
 };

@@ -145,6 +145,13 @@ const localePics = [
   "images/hexastadium.png",
 ];
 const marketingTactics = [flyer, socialMedia, newspaper, radio, tv];
+let storeLemons = 0;
+let storeSugar = 0;
+let storeCups = 0;
+let storeIce = 0;
+let recipeLemons = 0;
+let recipeSugar = 0;
+let recipeIce = 0;
 let currentLocaleIndex = 0;
 let timeCount = 0;
 let weather = ["sunny", "cloudy", "raining"];
@@ -171,6 +178,15 @@ const playerStats = document.querySelector(".player-information");
 const localePicture = document.querySelector(".picture");
 const flavortext = document.querySelector(".flavor-text");
 const staffList = document.querySelector(".staff-list");
+const recipeLemonCount = document.querySelector("#recipe-lemons");
+const recipeSugarCount = document.querySelector("#recipe-sugar");
+const recipeIceCount = document.querySelector("#recipe-ice");
+const minusLemons = document.querySelector(".minus-lemons");
+const addLemons = document.querySelector(".add-lemons");
+const minusSugar = document.querySelector(".minus-sugar");
+const addSugar = document.querySelector(".add-sugar");
+const minusIce = document.querySelector(".minus-ice");
+const addIce = document.querySelector(".add-ice");
 /* ==========modals===============*/
 const statsModal = document.querySelector(".stats-modal");
 const rentModal = document.querySelector(".rent-modal");
@@ -407,6 +423,12 @@ function populateMarketing() {
     }
   });
 }
+
+function populateRecipe() {
+  recipeLemonCount.innerText = `${recipeLemons}`;
+  recipeSugarCount.innerText = `${recipeSugar}`;
+  recipeIceCount.innerText = `${recipeIce}`;
+}
 /* =============================
 BUTTON FUNCTIONS
 ============================= */
@@ -629,6 +651,45 @@ function buyMarketing(evt) {
     }
   }
 }
+function recipeButtons(evt) {
+  if (evt.target === minusLemons) {
+    if (recipeLemons >= 1) {
+      recipeLemons -= 1;
+      console.log(recipeLemons);
+      populateRecipe();
+    }
+  }
+  if (evt.target === addLemons) {
+    recipeLemons += 1;
+    console.log(recipeLemons);
+    populateRecipe();
+  }
+  if (evt.target === minusSugar) {
+    if (recipeSugar >= 1) {
+      recipeSugar -= 1;
+      console.log(recipeSugar);
+      populateRecipe();
+    }
+  }
+  if (evt.target === addSugar) {
+    recipeSugar += 1;
+    console.log(recipeSugar);
+    populateRecipe();
+  }
+  if (evt.target === minusIce) {
+    if (recipeIce >= 1) {
+      recipeIce -= 1;
+      console.log(recipeIce);
+      populateRecipe();
+    }
+  }
+  if (evt.target === addIce) {
+    recipeIce += 1;
+    console.log(recipeIce);
+    populateRecipe();
+  }
+}
+
 function saveMyGame() {}
 /* =============================
 PLAYER
@@ -658,6 +719,12 @@ savegame.addEventListener("click", saveMyGame);
 nextLocale.addEventListener("click", localeBtns);
 prevLocale.addEventListener("click", localeBtns);
 chooseLocale.addEventListener("click", localeBtns);
+minusLemons.addEventListener("click", recipeButtons);
+addLemons.addEventListener("click", recipeButtons);
+minusSugar.addEventListener("click", recipeButtons);
+addSugar.addEventListener("click", recipeButtons);
+minusIce.addEventListener("click", recipeButtons);
+addIce.addEventListener("click", recipeButtons);
 mainMenu.addEventListener("click", () => {
   document.location.href = "index2.html";
 });
@@ -671,4 +738,5 @@ window.onload = () => {
   populateLocalePicture();
   populateStaff();
   populateMarketing();
+  populateRecipe();
 };

@@ -153,6 +153,7 @@ let recipeLemons = 0;
 let recipeSugar = 0;
 let recipeIce = 0;
 let currentLocaleIndex = 0;
+let suppliesTotalCost = 0;
 let timeCount = 0;
 let weather = ["sunny", "cloudy", "raining"];
 let Temp = "40 to 100";
@@ -187,6 +188,23 @@ const minusSugar = document.querySelector(".minus-sugar");
 const addSugar = document.querySelector(".add-sugar");
 const minusIce = document.querySelector(".minus-ice");
 const addIce = document.querySelector(".add-ice");
+const lemonCart = document.querySelector(".lemon-supplies");
+const sugarCart = document.querySelector(".sugar-supplies");
+const cupCart = document.querySelector(".cup-supplies");
+const iceCart = document.querySelector(".ice-supplies");
+const minusLemonsSupplies = document.querySelector("#minus-lemons");
+const addLemonsSupplies = document.querySelector("#add-lemons");
+const minusSugarSupplies = document.querySelector("#minus-sugar");
+const addSugarSupplies = document.querySelector("#add-sugar");
+const minusCupsSupplies = document.querySelector("#minus-cups");
+const addCupsSupplies = document.querySelector("#add-cups");
+const minusIceSupplies = document.querySelector("#minus-ice");
+const addIceSupplies = document.querySelector("#add-ice");
+const suppliesTotal = document.querySelector("#supplies-totalCost");
+const checkOutSupplies = document.querySelector("#buy-goods");
+const cancelShopping = document.querySelector("#cancel-buy");
+const lemonStandList = document.querySelector(".lemon-stands");
+
 /* ==========modals===============*/
 const statsModal = document.querySelector(".stats-modal");
 const rentModal = document.querySelector(".rent-modal");
@@ -302,7 +320,7 @@ function populatePlayerStats() {
   playerStats.innerHTML = `
   <div class= "player-details">
   <h2>player</h2>
-    <h4>Money: ${player.money}</h4>
+    <h4>Money: ${player.money.toFixed(2)}</h4>
   </div>
   <div>
     <h2>Inventory</h2>
@@ -346,7 +364,33 @@ function populateTools() {
     <li id="fridge"><button class="fridge button">Buy</button><img src="" alt=""> Fridge Cost: 800</li>
       <p>keeps ice from melting and keeps your lemons from spoiling. </p>
   `;
+  lemonStandList.innerHTML = `
+  <li id= "woodenStand"> ${lemonadeStands[0].name} costs: ${lemonadeStands[0].cost} Capacities: Lemons: ${lemonadeStands[0].lemonCapacity} Sugar:${lemonadeStands[0].sugarCapacity} Ice: ${lemonadeStands[0].iceCapacity} Cups:${lemonadeStands[0].cupsCapacity} <button class=" woodenStand button">buy<button> </li>
 
+  <li id="coolStand"> ${lemonadeStands[1].name} costs: ${lemonadeStands[1].cost} Capacities: Lemons: ${lemonadeStands[1].lemonCapacity} Sugar:${lemonadeStands[1].sugarCapacity} Ice: ${lemonadeStands[1].iceCapacity} Cups:${lemonadeStands[1].cupsCapacity} <button class="coolStand button">buy<button> </li>
+  
+  <li id="pavilion"> ${lemonadeStands[2].name} costs: ${lemonadeStands[2].cost} Capacities: Lemons: ${lemonadeStands[2].lemonCapacity} Sugar:${lemonadeStands[2].sugarCapacity} Ice: ${lemonadeStands[2].iceCapacity} Cups:${lemonadeStands[2].cupsCapacity} <button class="pavilion button">buy<button> </li>
+  <li id="lemonadeHouse"> ${lemonadeStands[3].name} costs: ${lemonadeStands[3].cost} Capacities: Lemons: ${lemonadeStands[3].lemonCapacity} Sugar:${lemonadeStands[3].sugarCapacity} Ice: ${lemonadeStands[3].iceCapacity} Cups:${lemonadeStands[3].cupsCapacity} <button class="lemonadeHouse button">buy<button> </li>
+  `;
+  for (let i = 0; i < lemonadeStands.length; i++) {
+    if (player.LemonStand === woodenStand) {
+      const woodenStandLi = document.querySelector("#woodenStand");
+      woodenStandLi.innerHTML = `${lemonadeStands[0].name} costs: ${lemonadeStands[0].cost} Capacities: Lemons: ${lemonadeStands[0].lemonCapacity} Sugar:${lemonadeStands[0].sugarCapacity} Ice: ${lemonadeStands[0].iceCapacity} Cups:${lemonadeStands[0].cupsCapacity} <span>Currently owned</span> `;
+    }
+    if (player.LemonStand === coolStand) {
+      const coolStandLi = document.querySelector("#coolStand");
+      coolStandLi.innerHTML = `${lemonadeStands[1].name} costs: ${lemonadeStands[1].cost} Capacities: Lemons: ${lemonadeStands[1].lemonCapacity} Sugar:${lemonadeStands[1].sugarCapacity} Ice: ${lemonadeStands[1].iceCapacity} Cups:${lemonadeStands[1].cupsCapacity} <span>Currently owned</span> `;
+    }
+    if (player.LemonStand === pavilion) {
+      const pavilionLi = document.querySelector("#pavilion");
+      pavilionLi.innerHTML = `${lemonadeStands[2].name} costs: ${lemonadeStands[2].cost} Capacities: Lemons: ${lemonadeStands[2].lemonCapacity} Sugar:${lemonadeStands[2].sugarCapacity} Ice: ${lemonadeStands[2].iceCapacity} Cups:${lemonadeStands[2].cupsCapacity} <span>Currently owned</span> 
+      `;
+    }
+    if (player.LemonStand === lemonadeHouse) {
+      const lemonadeHouseLi = document.querySelector("#lemonadeHouse");
+      lemonadeHouseLi.innerHTML = `${lemonadeStands[3].name} costs: ${lemonadeStands[3].cost} Capacities: Lemons: ${lemonadeStands[3].lemonCapacity} Sugar:${lemonadeStands[3].sugarCapacity} Ice: ${lemonadeStands[3].iceCapacity} Cups:${lemonadeStands[3].cupsCapacity} <span>Currently owned</span> `;
+    }
+  }
   player.tools.forEach((index) => {
     if (player.tools.includes(umbrella)) {
       const umbrellaLi = document.querySelector("#umbrella");
@@ -373,9 +417,7 @@ function populateTools() {
       fridgeLi.innerHTML = `<span>OWNED</span><img src="" alt=""> Fridge Cost: 800`;
     }
   });
-  const toolBuyBtns = document
-    .querySelector(".upgrade-items")
-    .querySelectorAll(".button");
+  const toolBuyBtns = document.querySelectorAll(".button");
   toolBuyBtns.forEach((item) => {
     item.addEventListener("click", buyTools);
   });
@@ -423,11 +465,17 @@ function populateMarketing() {
     }
   });
 }
-
 function populateRecipe() {
   recipeLemonCount.innerText = `${recipeLemons}`;
   recipeSugarCount.innerText = `${recipeSugar}`;
   recipeIceCount.innerText = `${recipeIce}`;
+}
+function populateSupplies() {
+  lemonCart.innerText = `${storeLemons}`;
+  sugarCart.innerText = `${storeSugar}`;
+  cupCart.innerText = `${storeCups}`;
+  iceCart.innerText = `${storeIce}`;
+  suppliesTotal.innerText = `${suppliesTotalCost.toFixed(2)}`;
 }
 /* =============================
 BUTTON FUNCTIONS
@@ -513,6 +561,42 @@ function buyTools(evt) {
       alert("you don't have enough money for this");
     }
   }
+  if (evt.target.classList.contains("woodenStand"))
+    if (player.money >= woodenStand.cost) {
+      player.money -= woodenStand.cost;
+      player.LemonStand = woodenStand;
+      populateTools();
+      populatePlayerStats();
+    } else {
+      alert("you don't have enough money for this");
+    }
+  if (evt.target.classList.contains("coolStand"))
+    if (player.money >= coolStand.cost) {
+      player.money -= coolStand.cost;
+      player.LemonStand = coolStand;
+      populateTools();
+      populatePlayerStats();
+    } else {
+      alert("you don't have enough money for this");
+    }
+  if (evt.target.classList.contains("pavilion"))
+    if (player.money >= pavilion.cost) {
+      player.money -= pavilion.cost;
+      player.LemonStand = pavilion;
+      populateTools();
+      populatePlayerStats();
+    } else {
+      alert("you don't have enough money for this");
+    }
+  if (evt.target.classList.contains("lemonadeHouse"))
+    if (player.money >= lemonadeHouse.cost) {
+      player.money -= lemonadeHouse.cost;
+      player.LemonStand = lemonadeHouse;
+      populateTools();
+      populatePlayerStats();
+    } else {
+      alert("you don't have enough money for this");
+    }
 }
 function hireStaff(evt) {
   if (evt.target.classList.contains("timmy")) {
@@ -689,6 +773,110 @@ function recipeButtons(evt) {
     populateRecipe();
   }
 }
+function buySupplies(evt) {
+  if (evt.target === minusLemonsSupplies) {
+    if (storeLemons >= 1) {
+      if (suppliesTotalCost >= 0.5) {
+        storeLemons -= 1;
+        suppliesTotalCost -= 0.5;
+        populateSupplies();
+      }
+    }
+  }
+
+  if (evt.target === addLemonsSupplies) {
+    if (player.LemonStand.lemonCapacity > player.lemons + storeLemons) {
+      storeLemons += 1;
+      suppliesTotalCost += 0.5;
+      populateSupplies();
+    } else {
+      alert("you don't have enough lemon capacity");
+    }
+  }
+  if (evt.target === minusSugarSupplies) {
+    if (storeSugar >= 1) {
+      if (suppliesTotalCost >= 0.34) {
+        storeSugar -= 1;
+        suppliesTotalCost -= 0.34;
+        populateSupplies();
+      }
+    }
+  }
+
+  if (evt.target === addSugarSupplies) {
+    if (player.LemonStand.sugarCapacity > player.sugar + storeSugar) {
+      storeSugar += 1;
+      suppliesTotalCost += 0.34;
+      populateSupplies();
+    } else {
+      alert("you don't have enough sugar capacity");
+    }
+  }
+
+  if (evt.target === minusCupsSupplies) {
+    if (storeCups >= 1) {
+      if (suppliesTotalCost >= 0.08) {
+        storeCups -= 1;
+        populateSupplies();
+      }
+    }
+  }
+
+  if (evt.target === addCupsSupplies) {
+    if (player.LemonStand.cupsCapacity > player.cups + storeCups) {
+      storeCups += 1;
+      suppliesTotalCost += 0.08;
+      populateSupplies();
+    } else {
+      alert("you don't have enough cup capacity");
+    }
+  }
+
+  if (evt.target === minusIceSupplies) {
+    if (storeIce >= 1) {
+      if (suppliesTotalCost >= 0.07) {
+        storeIce -= 1;
+        suppliesTotalCost -= 0.07;
+        populateSupplies();
+      }
+    }
+  }
+
+  if (evt.target === addIceSupplies) {
+    if (player.LemonStand.iceCapacity > player.ice + storeIce) {
+      storeIce += 1;
+      suppliesTotalCost += 0.07;
+      populateSupplies();
+    } else {
+      alert("you don't have enough ice capacity");
+    }
+  }
+  if (evt.target === checkOutSupplies) {
+    if (player.money >= suppliesTotalCost) {
+      player.money -= suppliesTotalCost.toFixed(2);
+      player.lemons += storeLemons;
+      player.sugar += storeSugar;
+      player.cups += storeCups;
+      player.ice += storeIce;
+      storeIce = 0;
+      storeCups = 0;
+      storeSugar = 0;
+      storeLemons = 0;
+      suppliesTotalCost = 0;
+      populatePlayerStats();
+      populateSupplies();
+    }
+  }
+  if (evt.target === cancelShopping) {
+    storeIce = 0;
+    storeCups = 0;
+    storeSugar = 0;
+    storeLemons = 0;
+    suppliesTotalCost = 0;
+    populatePlayerStats();
+    populateSupplies();
+  }
+}
 
 function saveMyGame() {}
 /* =============================
@@ -697,6 +885,7 @@ PLAYER
 const player = {
   money: 20,
   locale: locales[currentLocaleIndex],
+  LemonStand: woodenStand,
   lemons: 0,
   sugar: 0,
   cups: 0,
@@ -725,6 +914,17 @@ minusSugar.addEventListener("click", recipeButtons);
 addSugar.addEventListener("click", recipeButtons);
 minusIce.addEventListener("click", recipeButtons);
 addIce.addEventListener("click", recipeButtons);
+minusLemonsSupplies.addEventListener("click", buySupplies);
+addLemonsSupplies.addEventListener("click", buySupplies);
+minusSugarSupplies.addEventListener("click", buySupplies);
+addSugarSupplies.addEventListener("click", buySupplies);
+minusCupsSupplies.addEventListener("click", buySupplies);
+addCupsSupplies.addEventListener("click", buySupplies);
+minusIceSupplies.addEventListener("click", buySupplies);
+addIceSupplies.addEventListener("click", buySupplies);
+checkOutSupplies.addEventListener("click", buySupplies);
+cancelShopping.addEventListener("click", buySupplies);
+
 mainMenu.addEventListener("click", () => {
   document.location.href = "index2.html";
 });

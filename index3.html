@@ -109,6 +109,9 @@
                 <li><button class="buy fridge">Buy</button><img src="" alt=""> Fridge Cost: 800</li>
                 <p>keeps ice from melting and keeps your lemons from spoiling. </p> -->
             </ul>
+            <ul class="lemon-stands">
+
+            </ul>
         </div>
     
         <div class="staff-modal">
@@ -138,15 +141,19 @@
         <div class="supplies-modal">
             <h2>Buy some supplies</h2>
             <h3>lemons</h3>
-            <h4><button>minus</button> <span>0</span> <button>add</button></h4>
+                <p>0.50 each</p>
+            <h4><button id="minus-lemons">minus</button> <span class="lemon-supplies">0</span> <button id="add-lemons">add</button></h4>
             <h3>sugar</h3>
-            <h4><button>minus</button> <span>0</span> <button>add</button></h4>
+                <p>0.34 each</p>
+            <h4><button id="minus-sugar">minus</button> <span class="sugar-supplies">0</span> <button id="add-sugar">add</button></h4>
             <h3>cups</h3>
-            <h4><button>minus</button> <span>0</span> <button>add</button></h4>
+                <p>0.08 each</p>
+            <h4><button id="minus-cups">minus</button> <span class="cup-supplies">0</span> <button id="add-cups">add</button></h4>
             <h3>Ice</h3>
-            <h4><button>minus</button> <span>0</span> <button>add</button></h4>
+                <p>0.07 each</p>
+            <h4><button id="minus-ice">minus</button> <span class="ice-supplies">0</span> <button id="add-ice">add</button></h4>
             <div>
-                <h2>Total Cost: <span>0</span></h2>
+                <h2>Total Cost: <span id="supplies-totalCost">0</span></h2>
             </div>
             <div class="game-specific-buttons">
                 <button id="cancel-buy">Cancel</button>

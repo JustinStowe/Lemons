@@ -1,3 +1,19 @@
 body {
     background-color: aquamarine;
 }
+main{
+     display: grid;
+    width: 100vw;
+    height: 100vh;
+    grid-template:
+    [header-left]'' 10vh [header-right]
+    [main-left]'' 25vh [main-right]
+    [main-middle-left]''10vh[main-middle-right]
+    [main-left]'' 40vh [main-right]
+    [footer-left]'' 15vh [footer-right]
+}
+.status-bar{
+    grid-area: supplies;
+    display: flex;
+    justify-content: space-around;
+}

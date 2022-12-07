@@ -49,9 +49,11 @@ function quitGame() {
   document.location.href = "index.html";
 }
 function newGame() {
+  localStorage.setItem("loadedSave", "");
   document.location.href = "index3.html";
 }
 function loadGame() {
+  localStorage.setItem("loadedSave", "yes");
   document.location.href = "index3.html";
 }
 function displayStats() {

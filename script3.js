@@ -154,7 +154,11 @@ let recipeSugar = 0;
 let recipeIce = 0;
 let currentLocaleIndex = 0;
 let suppliesTotalCost = 0;
-let timeCount = 0;
+let currentDay = 0;
+let currentMonth = 0;
+let currentYear = 0;
+let currentWeather;
+let currentTemp;
 let weather = ["sunny", "cloudy", "raining"];
 let Temp = "40 to 100";
 /* ======================
@@ -204,7 +208,11 @@ const suppliesTotal = document.querySelector("#supplies-totalCost");
 const checkOutSupplies = document.querySelector("#buy-goods");
 const cancelShopping = document.querySelector("#cancel-buy");
 const lemonStandList = document.querySelector(".lemon-stands");
-
+const yearNum = document.querySelector("#year");
+const monthNum = document.querySelector("#month");
+const dayNum = document.querySelector("#day");
+const tempNum = document.querySelector("#temp");
+const weatherDisplay = document.querySelector("#weather");
 /* ==========modals===============*/
 const statsModal = document.querySelector(".stats-modal");
 const rentModal = document.querySelector(".rent-modal");
@@ -248,6 +256,30 @@ function closeModals() {
   marketingModal.classList.remove("open-modal");
   recipeModal.classList.remove("open-modal");
   suppliesModal.classList.remove("open-modal");
+}
+function keepTime() {
+  currentDay = +1;
+
+  if (currentDay === 31) {
+    currentDay = 0;
+    currentMonth += 1;
+  }
+  dayNum.innerHTML = `${currentDay}`;
+  if (currentMonth === 13) {
+    currentMonth = 0;
+    currentYear += 1;
+  }
+  monthNum.innerHTML = `${currentMonth}`;
+  yearNum.innerHTML = `${currentYear}`;
+}
+function randomWeather() {
+  let i = Math.floor(Math.random() * 3);
+  console.log(i);
+  currentWeather = weather[i];
+  weatherDisplay.innerHTML = `${currentWeather}`;
+  let currentTemp = Math.floor(Math.random() * 100 - 40) + 40;
+
+  tempNum.innerHTML = `${currentTemp}`;
 }
 /* =============================
  POPULATE FUNCTIONS
@@ -477,6 +509,7 @@ function populateSupplies() {
   iceCart.innerText = `${storeIce}`;
   suppliesTotal.innerText = `${suppliesTotalCost.toFixed(2)}`;
 }
+function populateTimeAndWeather() {}
 /* =============================
 BUTTON FUNCTIONS
 ============================= */
@@ -878,11 +911,54 @@ function buySupplies(evt) {
   }
 }
 
-function saveMyGame() {}
+function saveMyGame() {
+  localStorage.setItem("player-info", JSON.stringify(player));
+  let gameSettings = {
+    lemonRecipe: `${recipeLemons}`,
+    sugarRecipe: `${recipeSugar}`,
+    iceRecipe: `${recipeIce}`,
+    currentLocale: `${currentLocaleIndex}`,
+    day: `${currentDay}`,
+    month: `${currentMonth}`,
+    year: `${currentYear}`,
+    weather: `${currentWeather}`,
+  };
+  window.location.reload();
+  document.location.href = "index2.html";
+}
+function loadGame() {
+  let loadedSave = localStorage.getItem("loadedSave") || "";
+  if (loadedSave === "yes") {
+    const playerData = JSON.parse(localStorage.getItem("player-info"));
+    console.log(playerData);
+    player.money = playerData.money;
+    if (playerData.locale === "neighborhood") {
+      currentLocaleIndex = 0;
+    } else if (playerData.locale.name === "park") {
+      currentLocaleIndex = 1;
+    } else if (playerData.locale.name === "down town") {
+      currentLocaleIndex = 2;
+    } else if (playerData.locale.name === "beach") {
+      currentLocaleIndex = 3;
+    } else if (playerData.locale.name === "The Hexa-Stadium") {
+      currentLocaleIndex = 4;
+    } else {
+      currentLocaleIndex = 0;
+    }
+    player.LemonStand = playerData.LemonStand;
+    player.lemons = playerData.lemons;
+    player.sugar = playerData.sugar;
+    player.cups = playerData.cups;
+    player.ice = playerData.ice;
+    player.tools = playerData.tools;
+    player.staff = playerData.staff;
+    player.marketing = playerData.marketing;
+  }
+}
 /* =============================
 PLAYER
 ============================= */
-const player = {
+let player = {
   money: 20,
   locale: locales[currentLocaleIndex],
   LemonStand: woodenStand,
@@ -894,6 +970,7 @@ const player = {
   staff: [],
   marketing: [],
 };
+
 /* =============================
 EVENT LISTENERS
 ============================= */
@@ -932,6 +1009,7 @@ startDay.addEventListener("click", () => {
   document.location.href = "index4.html";
 });
 window.onload = () => {
+  loadGame();
   populateLocales();
   populateTools();
   populatePlayerStats();
@@ -939,4 +1017,6 @@ window.onload = () => {
   populateStaff();
   populateMarketing();
   populateRecipe();
+  keepTime();
+  randomWeather();
 };

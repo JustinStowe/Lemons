@@ -142,7 +142,6 @@ const localePics = [
 ];
 let cupPrice = 0;
 let storeLemons = 0;
-``;
 let storeSugar = 0;
 let storeCups = 0;
 let storeIce = 0;
@@ -282,7 +281,9 @@ function randomWeather() {
 }
 function BeginDay() {
   localStorage.setItem("player-data", JSON.stringify(player));
+  saveSettings();
   localStorage.setItem("globalSettings", JSON.stringify(gameSettings));
+  document.location.href = "index4.html";
 }
 
 /* =============================
@@ -348,6 +349,7 @@ function populateStaff() {
 }
 function populateLocalePicture() {
   localePicture.innerHTML = `
+  <h2>${locales[currentLocaleIndex].name}</h2>
   <img class="current-location" src="${localePics[currentLocaleIndex]}" alt="Picture" height="370vh" width="500vw">
   `;
   flavortext.innerHTML = `${locales[currentLocaleIndex].info}`;
@@ -513,6 +515,18 @@ function populateSupplies() {
   cupCart.innerText = `${storeCups}`;
   iceCart.innerText = `${storeIce}`;
   suppliesTotal.innerText = `${suppliesTotalCost.toFixed(2)}`;
+}
+function saveSettings() {
+  gameSettings.lemonRecipe = recipeLemons;
+  gameSettings.sugarRecipe = recipeSugar;
+  gameSettings.iceRecipe = recipeIce;
+  gameSettings.cupCharge = cupPrice;
+  gameSettings.day = currentDay;
+  gameSettings.month = currentMonth;
+  gameSettings.year = currentYear;
+  gameSettings.weather = currentWeather;
+  gameSettings.temp = currentTemp;
+  gameSettings.locale = currentLocaleIndex;
 }
 /* =============================
 BUTTON FUNCTIONS
@@ -927,6 +941,7 @@ function buySupplies(evt) {
 
 function saveMyGame() {
   localStorage.setItem("player-info", JSON.stringify(player));
+  saveSettings();
   localStorage.setItem("gameSettings", JSON.stringify(gameSettings));
   window.location.reload();
   document.location.href = "index2.html";
@@ -964,16 +979,14 @@ function loadGame() {
     currentMonth = gameSettings.month;
     currentYear = gameSettings.year;
     currentWeather = gameSettings.weather;
-    recipeLemons = gameSettings.lemonRecipe - 1;
-    recipeSugar = gameSettings.sugarRecipe - 1;
-    recipeIce = gameSettings.iceRecipe - 1;
-    cupPrice = gameSettings.cupCharge - 1;
+    recipeLemons = gameSettings.lemonRecipe;
+    recipeSugar = gameSettings.sugarRecipe;
+    recipeIce = gameSettings.iceRecipe;
+    cupPrice = gameSettings.cupCharge;
     currentLocaleIndex = gameSettings.currentLocale;
     localStorage.setItem("loadedSave", "");
     populatePlayerStats();
-    populateLocales();
     populateTools();
-    populateLocalePicture();
     populateStaff();
     populateMarketing();
     populateRecipe();
@@ -991,16 +1004,16 @@ function updateAfterDay() {
  SETTINGS CAPTURES
 =========================*/
 let gameSettings = {
-  lemonRecipe: recipeLemons + 1,
-  sugarRecipe: recipeSugar + 1,
-  iceRecipe: recipeIce + 1,
-  cupCharge: cupPrice + 1,
-  day: `${currentDay}`,
-  month: `${currentMonth}`,
-  year: `${currentYear}`,
-  weather: `${currentWeather}`,
-  temp: `${currentTemp}`,
-  locale: `${currentLocaleIndex}`,
+  lemonRecipe: recipeLemons,
+  sugarRecipe: recipeLemons,
+  iceRecipe: recipeIce,
+  cupCharge: cupPrice,
+  day: currentDay,
+  month: currentMonth,
+  year: currentYear,
+  weather: currentWeather,
+  temp: currentTemp,
+  locale: currentLocaleIndex,
 };
 /* =============================
 PLAYER
@@ -1056,9 +1069,7 @@ savegame.addEventListener("click", saveMyGame);
 mainMenu.addEventListener("click", () => {
   document.location.href = "index2.html";
 });
-startDay.addEventListener("click", () => {
-  document.location.href = "index4.html";
-});
+startDay.addEventListener("click", BeginDay);
 window.onload = () => {
   populateLocales();
   populateTools();

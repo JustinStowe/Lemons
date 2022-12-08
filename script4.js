@@ -157,9 +157,24 @@ let currentMonth;
 let currentYear;
 let currentWeather;
 let currentTemp; //40 - 100//
+let cupSoldTotal;
+let totalProfits;
+let tastesBad;
+let tastesGood;
+let tooExpensive;
+
 /* ======================
  DOM STUFF
 =========================*/
+const cupsSold = document.querySelector("#cups-sold");
+const profits = document.querySelector("#profit");
+const nastyReaction = document.querySelector("#bad");
+const goodReaction = document.querySelector("#good");
+const costly = document.querySelector("#costly");
+const timeLi = document.querySelector("#time");
+const weatherLi = document.querySelector("#current-weather");
+const tempLi = document.querySelector("#currentTemp");
+const Settings = document.querySelector(".settings");
 
 /* =============================
 FUNCTIONS
@@ -188,9 +203,40 @@ function loadGameData() {
   player.staff = playerData.staff;
   player.marketing = playerData.marketing;
   console.log(player);
+  populateDay();
+  populateSettings();
 }
+function populatePerformance() {
+  cupsSold.innerText = `${cupSoldTotal}`;
+  profits.innerText = `${totalProfits}`;
+  nastyReaction.innerText = `${tastesBad}`;
+  goodReaction.innerText = `${tastesGood}`;
+  costly.innerText = `${tooExpensive}`;
+}
+function populateDay() {
+  timeLi.innerText = ` year: ${currentYear} month: ${currentMonth} day: ${currentDay}`;
+  weatherLi.innerText = `Current Weather: ${currentWeather}`;
+  tempLi.innerText = `Temp: ${currentTemp}`;
+}
+function populateSettings() {
+  Settings.innerHTML = `
+   <h1>Today's Settings:
+                <ul>
+                    <li id="rent">rent: ${player.locale.rent} </li>
+                    <li id="owned-upgrades">upgrades: ${player.tools} </li>
+                    <li id="advertising">advertising: ${player.marketing} </li>
+                    <li id="cup-price">cup Price: ${cupPrice} </li>
+                    </ul>
+                    <ul id="recipe"> Recipe: </ul>
+                    <li id="lemons-in-recipe"> lemons: ${recipeLemons}</li>
+                    <li id="sugar-in-recipe"> Sugar: ${recipeSugar} </li>
+                    <li id= ice-in-recipe> Ice: ${recipeIce} </li>
+            </h1>`;
+}
+
 /*
 1 pitcher equals 5 cups
+function to break down sugar and lemons from recipe into total pitchers needed
 */
 /* =============================
 PLAYER

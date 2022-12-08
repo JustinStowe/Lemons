@@ -47,6 +47,11 @@ class Hireling {
     this.bonus * 1.8;
   }
 }
+const timmy = new Hireling("lil timmy", 0, 1, 0.5);
+const bob = new Hireling("bob", 20, 10, 1);
+const jennifer = new Hireling("Jennifer", 100, 50, 5);
+const ronPopeil = new Hireling("Ron Popeil", 200, 100, 20);
+const daleCarnegie = new Hireling("Dale Carnegie", 1000, 500, 100);
 class Tool {
   constructor(name, cost, bonus) {
     this.name = name;
@@ -57,6 +62,12 @@ class Tool {
     this.bonus * 1;
   }
 }
+const umbrella = new Tool("umbrella", 99, 5);
+const iceMachine = new Tool("ice-machine", 99, 1);
+const boomBox = new Tool("Boom-Box", 149, 2);
+const juicer = new Tool("juicer", 199, 10);
+const cashRegister = new Tool("cash register", 350, 20);
+const fridge = new Tool("fridge", 800, 1);
 class Locale {
   constructor(name, rent, info, people, popularity) {
     this.name = name;
@@ -66,28 +77,6 @@ class Locale {
     this.popularity = popularity;
   }
 }
-
-class MarketingMethod {
-  constructor(name, cost, bonus) {
-    this.name = name;
-    this.cost = cost;
-    this.bonus = bonus;
-  }
-}
-/* Class seperation */
-const umbrella = new Tool("umbrella", 99, 5);
-const iceMachine = new Tool("ice-machine", 99, 1);
-const boomBox = new Tool("Boom-Box", 149, 2);
-const juicer = new Tool("juicer", 199, 10);
-const cashRegister = new Tool("cash register", 350, 20);
-const fridge = new Tool("fridge", 800, 1);
-/* Class seperation */
-const timmy = new Hireling("lil timmy", 0, 1, 0.5);
-const bob = new Hireling("bob", 20, 10, 1);
-const jennifer = new Hireling("Jennifer", 100, 50, 5);
-const ronPopeil = new Hireling("Ron Popeil", 200, 100, 20);
-const daleCarnegie = new Hireling("Dale Carnegie", 1000, 500, 100);
-/* Class seperation */
 const neighborhood = new Locale(
   "neighborhood",
   0,
@@ -123,7 +112,13 @@ const hexaStadium = new Locale(
   800,
   0
 );
-/* Class seperation */
+class MarketingMethod {
+  constructor(name, cost, bonus) {
+    this.name = name;
+    this.cost = cost;
+    this.bonus = bonus;
+  }
+}
 const flyer = new MarketingMethod("flyer", 1, 1);
 const socialMedia = new MarketingMethod("social media", 5, 2);
 const newspaper = new MarketingMethod("newspaper", 5, 2);
@@ -137,6 +132,7 @@ const lemonadeStands = [woodenStand, coolStand, pavilion, lemonadeHouse];
 const hirelings = [timmy, bob, jennifer, ronPopeil, daleCarnegie];
 const tools = [umbrella, iceMachine, boomBox, juicer, cashRegister, fridge];
 const locales = [neighborhood, park, downTown, beach, hexaStadium];
+const marketingTactics = [flyer, socialMedia, newspaper, radio, tv];
 const localePics = [
   "images/neighborhood.png",
   "images/park.png",
@@ -144,8 +140,9 @@ const localePics = [
   "images/beach.png",
   "images/hexastadium.png",
 ];
-const marketingTactics = [flyer, socialMedia, newspaper, radio, tv];
+let cupPrice = 0;
 let storeLemons = 0;
+``;
 let storeSugar = 0;
 let storeCups = 0;
 let storeIce = 0;
@@ -158,9 +155,8 @@ let currentDay = 0;
 let currentMonth = 0;
 let currentYear = 0;
 let currentWeather;
-let currentTemp;
+let currentTemp; //40 - 100//
 let weather = ["sunny", "cloudy", "raining"];
-let Temp = "40 to 100";
 /* ======================
  DOM STUFF
 =========================*/
@@ -213,6 +209,9 @@ const monthNum = document.querySelector("#month");
 const dayNum = document.querySelector("#day");
 const tempNum = document.querySelector("#temp");
 const weatherDisplay = document.querySelector("#weather");
+const minusPrice = document.querySelector("#price-down");
+const addPrice = document.querySelector("#price-up");
+const pricePerCup = document.querySelector("#cup-price");
 /* ==========modals===============*/
 const statsModal = document.querySelector(".stats-modal");
 const rentModal = document.querySelector(".rent-modal");
@@ -281,6 +280,11 @@ function randomWeather() {
 
   tempNum.innerHTML = `${currentTemp}`;
 }
+function BeginDay() {
+  localStorage.setItem("player-data", JSON.stringify(player));
+  localStorage.setItem("globalSettings", JSON.stringify(gameSettings));
+}
+
 /* =============================
  POPULATE FUNCTIONS
 ============================= */
@@ -501,6 +505,7 @@ function populateRecipe() {
   recipeLemonCount.innerText = `${recipeLemons}`;
   recipeSugarCount.innerText = `${recipeSugar}`;
   recipeIceCount.innerText = `${recipeIce}`;
+  pricePerCup.innerText = `${cupPrice.toFixed(2)}`;
 }
 function populateSupplies() {
   lemonCart.innerText = `${storeLemons}`;
@@ -509,7 +514,6 @@ function populateSupplies() {
   iceCart.innerText = `${storeIce}`;
   suppliesTotal.innerText = `${suppliesTotalCost.toFixed(2)}`;
 }
-function populateTimeAndWeather() {}
 /* =============================
 BUTTON FUNCTIONS
 ============================= */
@@ -805,6 +809,16 @@ function recipeButtons(evt) {
     console.log(recipeIce);
     populateRecipe();
   }
+  if (evt.target === minusPrice) {
+    if (cupPrice >= 0.1) {
+      cupPrice -= 0.1;
+      populateRecipe();
+    }
+  }
+  if (evt.target === addPrice) {
+    cupPrice += 0.1;
+    populateRecipe();
+  }
 }
 function buySupplies(evt) {
   if (evt.target === minusLemonsSupplies) {
@@ -913,16 +927,7 @@ function buySupplies(evt) {
 
 function saveMyGame() {
   localStorage.setItem("player-info", JSON.stringify(player));
-  let gameSettings = {
-    lemonRecipe: `${recipeLemons}`,
-    sugarRecipe: `${recipeSugar}`,
-    iceRecipe: `${recipeIce}`,
-    currentLocale: `${currentLocaleIndex}`,
-    day: `${currentDay}`,
-    month: `${currentMonth}`,
-    year: `${currentYear}`,
-    weather: `${currentWeather}`,
-  };
+  localStorage.setItem("gameSettings", JSON.stringify(gameSettings));
   window.location.reload();
   document.location.href = "index2.html";
 }
@@ -932,19 +937,19 @@ function loadGame() {
     const playerData = JSON.parse(localStorage.getItem("player-info"));
     console.log(playerData);
     player.money = playerData.money;
-    if (playerData.locale === "neighborhood") {
-      currentLocaleIndex = 0;
-    } else if (playerData.locale.name === "park") {
-      currentLocaleIndex = 1;
-    } else if (playerData.locale.name === "down town") {
-      currentLocaleIndex = 2;
-    } else if (playerData.locale.name === "beach") {
-      currentLocaleIndex = 3;
-    } else if (playerData.locale.name === "The Hexa-Stadium") {
-      currentLocaleIndex = 4;
-    } else {
-      currentLocaleIndex = 0;
-    }
+    // if (playerData.locale === "neighborhood") {
+    //   currentLocaleIndex = 0;
+    // } else if (playerData.locale.name === "park") {
+    //   currentLocaleIndex = 1;
+    // } else if (playerData.locale.name === "down town") {
+    //   currentLocaleIndex = 2;
+    // } else if (playerData.locale.name === "beach") {
+    //   currentLocaleIndex = 3;
+    // } else if (playerData.locale.name === "The Hexa-Stadium") {
+    //   currentLocaleIndex = 4;
+    // } else {
+    //   currentLocaleIndex = 0;
+    // }
     player.LemonStand = playerData.LemonStand;
     player.lemons = playerData.lemons;
     player.sugar = playerData.sugar;
@@ -953,8 +958,50 @@ function loadGame() {
     player.tools = playerData.tools;
     player.staff = playerData.staff;
     player.marketing = playerData.marketing;
+    const gameSettings = JSON.parse(localStorage.getItem("gameSettings"));
+    console.log(gameSettings);
+    currentDay = gameSettings.day;
+    currentMonth = gameSettings.month;
+    currentYear = gameSettings.year;
+    currentWeather = gameSettings.weather;
+    recipeLemons = gameSettings.lemonRecipe - 1;
+    recipeSugar = gameSettings.sugarRecipe - 1;
+    recipeIce = gameSettings.iceRecipe - 1;
+    cupPrice = gameSettings.cupCharge - 1;
+    currentLocaleIndex = gameSettings.currentLocale;
+    localStorage.setItem("loadedSave", "");
+    populatePlayerStats();
+    populateLocales();
+    populateTools();
+    populateLocalePicture();
+    populateStaff();
+    populateMarketing();
+    populateRecipe();
+    keepTime();
   }
 }
+function updateAfterDay() {
+  let resultsCheck = localStorage.getItem("dayresults") || "";
+  if (resultsCheck === "yes") {
+    localStorage.getItem("resultsFromDay");
+    localStorage.setItem("dayresults", "");
+  }
+}
+/* ======================
+ SETTINGS CAPTURES
+=========================*/
+let gameSettings = {
+  lemonRecipe: recipeLemons + 1,
+  sugarRecipe: recipeSugar + 1,
+  iceRecipe: recipeIce + 1,
+  cupCharge: cupPrice + 1,
+  day: `${currentDay}`,
+  month: `${currentMonth}`,
+  year: `${currentYear}`,
+  weather: `${currentWeather}`,
+  temp: `${currentTemp}`,
+  locale: `${currentLocaleIndex}`,
+};
 /* =============================
 PLAYER
 ============================= */
@@ -981,7 +1028,6 @@ staff.addEventListener("click", toggleModals);
 marketing.addEventListener("click", toggleModals);
 recipe.addEventListener("click", toggleModals);
 supplies.addEventListener("click", toggleModals);
-savegame.addEventListener("click", saveMyGame);
 nextLocale.addEventListener("click", localeBtns);
 prevLocale.addEventListener("click", localeBtns);
 chooseLocale.addEventListener("click", localeBtns);
@@ -1001,7 +1047,12 @@ minusIceSupplies.addEventListener("click", buySupplies);
 addIceSupplies.addEventListener("click", buySupplies);
 checkOutSupplies.addEventListener("click", buySupplies);
 cancelShopping.addEventListener("click", buySupplies);
-
+addPrice.addEventListener("click", recipeButtons);
+minusPrice.addEventListener("click", recipeButtons);
+/* =============================
+NAVIGATION BUTTONS
+============================= */
+savegame.addEventListener("click", saveMyGame);
 mainMenu.addEventListener("click", () => {
   document.location.href = "index2.html";
 });
@@ -1009,14 +1060,26 @@ startDay.addEventListener("click", () => {
   document.location.href = "index4.html";
 });
 window.onload = () => {
-  loadGame();
   populateLocales();
   populateTools();
-  populatePlayerStats();
   populateLocalePicture();
   populateStaff();
   populateMarketing();
   populateRecipe();
   keepTime();
   randomWeather();
+  populatePlayerStats();
+  loadGame();
 };
+/* =============================
+EXPORTS
+============================= */
+
+// export let classes = { LemonStand, Hireling, Tool, Locale };
+// export let initilizedItems = {
+//   lemonadeStands,
+//   hirelings,
+//   tools,
+//   locales,
+//   marketingTactics,
+// };

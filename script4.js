@@ -147,21 +147,21 @@ const localePics = [
   "images/hexastadium.png",
 ];
 
-let recipeLemons;
-let recipeSugar;
-let recipeIce;
-let currentLocaleIndex;
-let suppliesTotalCost;
-let currentDay;
-let currentMonth;
-let currentYear;
-let currentWeather;
-let currentTemp; //40 - 100//
-let cupSoldTotal;
-let totalProfits;
-let tastesBad;
-let tastesGood;
-let tooExpensive;
+let recipeLemons = 0;
+let recipeSugar = 0;
+let recipeIce = 0;
+let currentLocaleIndex = 0;
+let currentDay = 0;
+let currentMonth = 0;
+let currentYear = 0;
+let currentWeather = 0;
+let currentTemp = 0; //40 - 100//
+let cupSoldTotal = 0;
+let totalProfits = 0;
+let tastesBad = 0;
+let tastesGood = 0;
+let tooExpensive = 0;
+let cupPrice = 0;
 
 /* ======================
  DOM STUFF
@@ -180,20 +180,28 @@ const Settings = document.querySelector(".settings");
 FUNCTIONS
 ============================= */
 function loadGameData() {
-  const gameData = JSON.parse(localStorage.getItem("gameSettings"));
-  console.log(gameData);
+  const gameSettings = JSON.parse(localStorage.getItem("gameSettings"));
+  console.log(gameSettings);
   currentDay = gameSettings.day;
+  console.log();
   currentMonth = gameSettings.month;
+  console.log();
   currentYear = gameSettings.year;
+  console.log();
   currentWeather = gameSettings.weather;
+  console.log();
   recipeLemons = gameSettings.lemonRecipe;
+  console.log();
   recipeSugar = gameSettings.sugarRecipe;
+  console.log();
   recipeIce = gameSettings.iceRecipe;
+  console.log();
   currentLocaleIndex = gameSettings.currentLocale;
+  cupPrice = gameSettings.cupCharge;
   const playerData = JSON.parse(localStorage.getItem("player-info"));
   console.log(playerData);
   player.money = playerData.money;
-  player.locale = locales[currentLocaleIndex];
+  player.locale = playerData.locale;
   player.LemonStand = playerData.LemonStand;
   player.lemons = playerData.lemons;
   player.sugar = playerData.sugar;
@@ -257,7 +265,7 @@ let player = {
 EVENT LISTENERS
 ============================= */
 window.onload = () => {
-  loadGameData;
+  loadGameData();
 };
 /* =============================
 MODULE EXPORTS

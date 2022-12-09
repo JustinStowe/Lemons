@@ -282,7 +282,7 @@ function randomWeather() {
 function BeginDay() {
   localStorage.setItem("player-data", JSON.stringify(player));
   saveSettings();
-  localStorage.setItem("globalSettings", JSON.stringify(gameSettings));
+  localStorage.setItem("gameSettings", JSON.stringify(gameSettings));
   document.location.href = "index4.html";
 }
 
@@ -952,19 +952,6 @@ function loadGame() {
     const playerData = JSON.parse(localStorage.getItem("player-info"));
     console.log(playerData);
     player.money = playerData.money;
-    // if (playerData.locale === "neighborhood") {
-    //   currentLocaleIndex = 0;
-    // } else if (playerData.locale.name === "park") {
-    //   currentLocaleIndex = 1;
-    // } else if (playerData.locale.name === "down town") {
-    //   currentLocaleIndex = 2;
-    // } else if (playerData.locale.name === "beach") {
-    //   currentLocaleIndex = 3;
-    // } else if (playerData.locale.name === "The Hexa-Stadium") {
-    //   currentLocaleIndex = 4;
-    // } else {
-    //   currentLocaleIndex = 0;
-    // }
     player.LemonStand = playerData.LemonStand;
     player.lemons = playerData.lemons;
     player.sugar = playerData.sugar;
@@ -1004,6 +991,7 @@ function updateAfterDay() {
  SETTINGS CAPTURES
 =========================*/
 let gameSettings = {
+  locale: currentLocaleIndex,
   lemonRecipe: recipeLemons,
   sugarRecipe: recipeLemons,
   iceRecipe: recipeIce,
@@ -1013,7 +1001,6 @@ let gameSettings = {
   year: currentYear,
   weather: currentWeather,
   temp: currentTemp,
-  locale: currentLocaleIndex,
 };
 /* =============================
 PLAYER

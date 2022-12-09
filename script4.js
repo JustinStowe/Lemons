@@ -175,6 +175,12 @@ const timeLi = document.querySelector("#time");
 const weatherLi = document.querySelector("#current-weather");
 const tempLi = document.querySelector("#currentTemp");
 const Settings = document.querySelector(".settings");
+// const lemonStatus = document.querySelector('#lemons')
+// const sugarStatus = document.querySelector('#sugar')
+// const iceStatus = document.querySelector('#ice')
+// const cupStatus = document.querySelector('#cups')
+// const totalPitchers = document.querySelector('#pitcher')
+const suppliesStatus = document.querySelector(".supplies");
 
 /* =============================
 FUNCTIONS
@@ -213,6 +219,16 @@ function loadGameData() {
   console.log(player);
   populateDay();
   populateSettings();
+  populateStatusBar();
+}
+function populateStatusBar() {
+  suppliesStatus.innerHTML = `
+   <span id="lemons">lemons: ${player.lemons} </span><span id="sugar"> Sugar: ${player.sugar} </span><span id="ice"> Ice: ${player.ice} </span><span id="cups">Cups: ${player.cups} </span> <span id="pitcher">Pitchers: </span>
+  `;
+}
+function calculatePitchers() {
+  player.lemons / recipeLemons; //6
+  player.sugar / recipeSugar; //6
 }
 function populatePerformance() {
   cupsSold.innerText = `${cupSoldTotal}`;
@@ -240,6 +256,33 @@ function populateSettings() {
                     <li id="sugar-in-recipe"> Sugar: ${recipeSugar} </li>
                     <li id= ice-in-recipe> Ice: ${recipeIce} </li>
             </h1>`;
+}
+
+function processDay() {
+  let popularityValue = player.locale.popularity / 10; // 0
+  let peeps = player.locale.people; // 10
+  let customers = peeps * 0.1 * popularityValue + 1;
+
+  /*
+  per 10 points of popularity, 10% of locale's people will stop
+  umbrella will increase chances people will stop by 1 step.
+  ice machine will provide 100 ice everyday
+  boombox will increase chances people will stop by 1 step
+  juicer will divide timeout time in half when making another pitcher
+  cash register will divide timeout time in half that customer will be occupying stand div
+  fridge prevents supplies from disappearing
+  bonuses can increase the % or increase temp. increase locale people total.
+   */
+}
+/*(const umbrella = new Tool("umbrella", 99, 5);
+const iceMachine = new Tool("ice-machine", 99, 1);
+const boomBox = new Tool("Boom-Box", 149, 2);
+const juicer = new Tool("juicer", 199, 10);
+const cashRegister = new Tool("cash register", 350, 20);
+const fridge = new Tool("fridge", 800, 1);*/
+function handlebonuses() {
+  if (player.tools.includes(umbrella)) {
+  }
 }
 
 /*

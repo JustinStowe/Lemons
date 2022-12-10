@@ -16,6 +16,7 @@ main{
     grid-area: supplies;
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 .performance {
     grid-area: performance;
@@ -29,3 +30,36 @@ main{
 .locale-simulation{
     grid-area: simulation;
 }
+.start{
+    font-size: xx-large;
+}
+/* #road {
+    background: black;
+    height: 100vh;
+    width: 50px
+}
+
+#road>div {
+    border-bottom: 1px solid rgba(255, 255, 255, 10);
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px
+}
+
+#person {
+    background: red;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px
+}
+
+#store {
+    background: green;
+    width: 50px;
+    height: 60px;
+    position: fixed;
+    top: 27%;
+    left: 2.75%
+} */

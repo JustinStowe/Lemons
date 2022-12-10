@@ -69,12 +69,26 @@ const juicer = new Tool("juicer", 199, 10);
 const cashRegister = new Tool("cash register", 350, 20);
 const fridge = new Tool("fridge", 800, 1);
 class Locale {
-  constructor(name, rent, info, people, popularity) {
+  constructor(
+    name,
+    rent,
+    info,
+    people,
+    popularity,
+    maxPrice,
+    targetRecipeLemons,
+    targetRecipeSugar,
+    targetrecipeIce
+  ) {
     this.name = name;
     this.rent = rent;
     this.info = info;
     this.people = people;
     this.popularity = popularity;
+    this.maxPrice = maxPrice;
+    this.targetRecipeLemons = targetRecipeLemons;
+    this.targetRecipeSugar = targetRecipeSugar;
+    this.targetrecipeIce = targetrecipeIce;
   }
 }
 const neighborhood = new Locale(
@@ -82,35 +96,55 @@ const neighborhood = new Locale(
   0,
   "In front of your parents house is the perfect place to start selling lemonade, and it will not cost a penny in rent.",
   10,
-  1
+  5,
+  0.5,
+  3,
+  3,
+  2
 );
 const park = new Locale(
   "park",
   5,
   "A lemonade stand at the park? Great idea, many people play and exercise at the park and would enjoy relieving their thirst with lemonade. ",
   20,
-  0
+  0,
+  0.75,
+  4,
+  2,
+  3
 );
 const downTown = new Locale(
   "down town",
   15,
   "There is always people and tourist down town bustling around and would appreciate refreshing lemonade ",
   40,
-  0
+  0,
+  1.0,
+  3,
+  4,
+  2
 );
 const beach = new Locale(
   "beach",
   30,
   "What could be better than having fun at the beach  and being able to enjoy refreshing lemonade.",
   120,
-  0
+  0,
+  1.25,
+  4,
+  4,
+  3
 );
 const hexaStadium = new Locale(
   "The Hexa-Stadium",
   100,
   "You better bring your A-game to the game, the masses of fans will want something to wash down those hotdogs",
   800,
-  0
+  0,
+  1.5,
+  2,
+  2,
+  2
 );
 class MarketingMethod {
   constructor(name, cost, bonus) {
@@ -280,12 +314,22 @@ function randomWeather() {
   tempNum.innerHTML = `${currentTemp}`;
 }
 function BeginDay() {
+  console.log(player);
   localStorage.setItem("player-data", JSON.stringify(player));
   saveSettings();
   localStorage.setItem("gameSettings", JSON.stringify(gameSettings));
   document.location.href = "index4.html";
 }
-
+function checkWinOrLose() {
+  if (player.money >= 100000) {
+    alert("conratz, you won.");
+    location.href = "index2.html";
+  }
+  if (player.money < 0) {
+    alert("oh no, you ran out of money, try again");
+    location.href = "index2.html";
+  }
+}
 /* =============================
  POPULATE FUNCTIONS
 ============================= */
@@ -348,11 +392,37 @@ function populateStaff() {
   });
 }
 function populateLocalePicture() {
-  localePicture.innerHTML = `
-  <h2>${locales[currentLocaleIndex].name}</h2>
-  <img class="current-location" src="${localePics[currentLocaleIndex]}" alt="Picture" height="370vh" width="500vw">
+  if (player.locale.name === "neighborhood") {
+    localePicture.innerHTML = `<h2>${locales[0].name}</h2>
+  <img class="current-location" src="${localePics[0]}" alt="Picture" height="370vh" width="500vw">
   `;
-  flavortext.innerHTML = `${locales[currentLocaleIndex].info}`;
+    flavortext.innerHTML = `${locales[0].info}`;
+  }
+  if (player.locale.name === "park") {
+    localePicture.innerHTML = `<h2>${locales[1].name}</h2>
+  <img class="current-location" src="${localePics[1]}" alt="Picture" height="370vh" width="500vw">
+ 
+  `;
+    flavortext.innerHTML = `${locales[1].info}`;
+  }
+  if (player.locale.name === "down Town") {
+    localePicture.innerHTML = `<h2>$${locales[2].name}</h2>
+  <img class="current-location" src="${localePics[2]}" alt="Picture" height="370vh" width="500vw">
+  `;
+    flavortext.innerHTML = `${locales[2].info}`;
+  }
+  if (player.locale.name === "beach") {
+    localePicture.innerHTML = `<h2>${locales[3].name}</h2>
+  <img class="current-location" src="${localePics[3]}" alt="Picture" height="370vh" width="500vw">
+  `;
+    flavortext.innerHTML = `${locales[3].info}`;
+  }
+  if (player.locale.name === "The Hexa-Stadium") {
+    localePicture.innerHTML = `<h2>${locales[4].name}</h2>
+  <img class="current-location" src="${localePics[4]}" alt="Picture" height="370vh" width="500vw">
+  `;
+    flavortext.innerHTML = `${locales[4].info}`;
+  }
 }
 function populatePlayerStats() {
   playerStats.innerHTML = `
@@ -547,7 +617,9 @@ function localeBtns(evt) {
     }
   }
   if (evt.target.classList.contains("here")) {
+    player.locale = locales[currentLocaleIndex];
     populateLocalePicture();
+    console.log(player.locale);
   }
   populateLocales();
 }
@@ -940,7 +1012,7 @@ function buySupplies(evt) {
 }
 
 function saveMyGame() {
-  localStorage.setItem("player-info", JSON.stringify(player));
+  localStorage.setItem("player-data", JSON.stringify(player));
   saveSettings();
   localStorage.setItem("gameSettings", JSON.stringify(gameSettings));
   window.location.reload();
@@ -949,10 +1021,11 @@ function saveMyGame() {
 function loadGame() {
   let loadedSave = localStorage.getItem("loadedSave") || "";
   if (loadedSave === "yes") {
-    const playerData = JSON.parse(localStorage.getItem("player-info"));
+    const playerData = JSON.parse(localStorage.getItem("player-data"));
     console.log(playerData);
     player.money = playerData.money;
     player.LemonStand = playerData.LemonStand;
+    player.locale = playerData.locale;
     player.lemons = playerData.lemons;
     player.sugar = playerData.sugar;
     player.cups = playerData.cups;
@@ -978,13 +1051,53 @@ function loadGame() {
     populateMarketing();
     populateRecipe();
     keepTime();
+    populateLocalePicture();
   }
 }
 function updateAfterDay() {
-  let resultsCheck = localStorage.getItem("dayresults") || "";
+  let resultsCheck = localStorage.getItem("dayResults") || "";
   if (resultsCheck === "yes") {
-    localStorage.getItem("resultsFromDay");
-    localStorage.setItem("dayresults", "");
+    let returns = JSON.parse(localStorage.getItem("resultsFromDay"));
+    player.money = returns.money;
+    player.locale = returns.locale;
+    player.LemonStand = returns.LemonStand;
+    player.lemons = returns.lemons;
+    player.sugar = returns.sugar;
+    player.cups = returns.cups;
+    player.ice = returns.ice;
+    player.tools = returns.tools;
+    player.staff = returns.staff;
+    player.marketing = [];
+    for (let i = 0; i < player.staff.length; i++) {
+      player.money -= player.staff[i].payrate;
+      console.log(player.staff[i].payrate);
+      console.log(player.money);
+    }
+    localStorage.setItem("dayResults", "");
+    keepTime();
+    populatePlayerStats();
+  }
+}
+function developerMode() {
+  let developerModeCheck = localStorage.getItem("developer-mode") || "";
+  if (developerModeCheck === "yes") {
+    player.money = 100000;
+    player.locale = locales[currentLocaleIndex];
+    player.lemons = 1000;
+    player.sugar = 1000;
+    player.ice = 1000;
+    player.cups = 1000;
+    player.tools.push(
+      umbrella,
+      iceMachine,
+      boomBox,
+      juicer,
+      cashRegister,
+      fridge
+    );
+    player.marketing.push(flyer, socialMedia, newspaper, radio, tv);
+    player.staff.push(bob, jennifer, ronPopeil, daleCarnegie);
+    localStorage.setItem("developer-mode", "");
   }
 }
 /* ======================
@@ -1058,6 +1171,7 @@ mainMenu.addEventListener("click", () => {
 });
 startDay.addEventListener("click", BeginDay);
 window.onload = () => {
+  developerMode();
   populateLocales();
   populateTools();
   populateLocalePicture();
@@ -1068,6 +1182,8 @@ window.onload = () => {
   randomWeather();
   populatePlayerStats();
   loadGame();
+  updateAfterDay();
+  checkWinOrLose();
 };
 /* =============================
 EXPORTS

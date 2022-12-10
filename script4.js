@@ -445,11 +445,6 @@ function dayOfBusiness() {
   }, 5000);
 }
 
-/*
-1 pitcher equals 5 cups
-function to break down sugar and lemons from recipe into total pitchers needed
-*/
-
 /* =============================
 EVENT LISTENERS
 ============================= */

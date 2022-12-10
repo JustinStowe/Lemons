@@ -313,13 +313,6 @@ function randomWeather() {
 
   tempNum.innerHTML = `${currentTemp}`;
 }
-function BeginDay() {
-  console.log(player);
-  localStorage.setItem("player-data", JSON.stringify(player));
-  saveSettings();
-  localStorage.setItem("gameSettings", JSON.stringify(gameSettings));
-  document.location.href = "index4.html";
-}
 function checkWinOrLose() {
   if (player.money >= 100000) {
     alert("conratz, you won.");
@@ -1010,7 +1003,13 @@ function buySupplies(evt) {
     populateSupplies();
   }
 }
-
+function BeginDay() {
+  console.log(player);
+  localStorage.setItem("player-data", JSON.stringify(player));
+  saveSettings();
+  localStorage.setItem("gameSettings", JSON.stringify(gameSettings));
+  document.location.href = "index4.html";
+}
 function saveMyGame() {
   localStorage.setItem("player-data", JSON.stringify(player));
   saveSettings();

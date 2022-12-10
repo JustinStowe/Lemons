@@ -285,7 +285,7 @@ function populateStatusBar() {
   suppliesStatus.innerHTML = `
    <span id="lemons">lemons: ${player.lemons} </span> ||<span id="sugar"> Sugar: ${player.sugar} </span> ||<span id="ice"> Ice: ${player.ice} </span> ||<span id="cups">Cups: ${player.cups} </span> ||<span id="pitcher">  Cups in Pitcher:${pitcherCups} </span>
   `;
-  playerCash.innerText = `${player.money}`;
+  playerCash.innerText = `${player.money.toFixed(2)}`;
 }
 function populatePerformance() {
   cupsSold.innerText = `${cupSoldTotal}`;
@@ -424,6 +424,7 @@ function dayOfBusiness() {
       player.money += cupPrice;
       totalProfits += cupPrice;
       pitcherCups -= 1;
+      player.cups -= 1;
       player.ice -= recipeIce;
       cupSoldTotal += 1;
       populateStatusBar();

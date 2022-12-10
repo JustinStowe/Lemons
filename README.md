@@ -30,6 +30,8 @@ I am recreating a game from scratch just by eyeballing it from remembered gamepl
 
 ##code example:
 
+<xml>
+  
 function populatePlayerStats() {
   playerStats.innerHTML = `
   <div class= "player-details">
@@ -63,6 +65,10 @@ function populatePlayerStats() {
     </div> 
     `;
 }
+  
+</xml>
+
+
 Is this what you are asking for?
 
 ##Installation
